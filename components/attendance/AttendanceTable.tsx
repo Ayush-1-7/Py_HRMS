@@ -10,6 +10,7 @@ import {
   IoEllipseOutline,
   IoSearchOutline,
   IoCloseOutline,
+  IoCalendarOutline,
 } from "react-icons/io5";
 import {
   fetchAttendance,
@@ -20,33 +21,55 @@ import {
 } from "@/services/attendanceService";
 import { DEPARTMENT_COLORS, type Department } from "@/lib/departments";
 import { BiCalendarX } from "react-icons/bi";
+import Dropdown from "@/components/ui/Dropdown";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 /* ── Status config ───────────────────────────────────────── */
 const STATUS_CONFIG: Record<
   AttendanceStatus,
-  { label: string; color: string; bg: string; icon: React.ReactNode }
+  { label: string; badge: string; text: string; icon: React.ReactNode }
 > = {
   unmarked: {
-    label: "Unmarked",
-    color: "text-text-secondary font-medium",
-    bg: "bg-surface-muted border border-border-default",
-    icon: <IoEllipseOutline size={14} />,
+    label: "UNMARKED",
+    badge: "bg-slate-900/50 border-slate-700 text-slate-400 dark:bg-slate-900/80 dark:border-slate-800",
+    text: "text-slate-400",
+    icon: <IoEllipseOutline size={12} />,
   },
   present: {
-    label: "Present",
-    color: "text-success font-bold",
-    bg: "bg-success-subtle border border-success",
-    icon: <IoCheckmarkCircle size={14} />,
+    label: "PRESENT",
+    badge: "bg-emerald-500/20 border-emerald-500/50 text-emerald-700 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/30",
+    text: "text-emerald-700 dark:text-emerald-400",
+    icon: <IoCheckmarkCircle size={12} />,
   },
   absent: {
-    label: "Absent",
-    color: "text-danger font-bold",
-    bg: "bg-danger-subtle border border-danger",
-    icon: <IoCloseCircle size={14} />,
+    label: "ABSENT",
+    badge: "bg-rose-500 border-rose-600 text-white shadow-lg shadow-rose-500/20",
+    text: "text-white",
+    icon: <IoCloseCircle size={12} />,
+  },
+  leave: {
+    label: "LEAVE",
+    badge: "bg-amber-500/20 border-amber-500/50 text-amber-700 dark:text-amber-400 dark:bg-amber-500/10 dark:border-amber-500/30",
+    text: "text-amber-700 dark:text-amber-400",
+    icon: <IoCalendarOutline size={12} />,
+  },
+  holiday: {
+    label: "HOLIDAY",
+    badge: "bg-indigo-500/20 border-indigo-500/50 text-indigo-700 dark:text-indigo-400 dark:bg-indigo-500/10 dark:border-indigo-500/30",
+    text: "text-indigo-700 dark:text-indigo-400",
+    icon: <IoCalendarOutline size={12} />,
   },
 };
 
 const STATUSES = Object.keys(STATUS_CONFIG) as AttendanceStatus[];
+
+/* ── Grid Config ─────────────────────────────────────────── */
+const GRID_LAYOUT = "grid grid-cols-[minmax(260px,320px)_repeat(7,minmax(120px,1fr))_60px]";
 
 /* ── helpers ─────────────────────────────────────────────── */
 function dayLabel(dateStr: string) {
@@ -89,42 +112,39 @@ function StatusCell({
     }
   };
 
-  const cfg = STATUS_CONFIG[current];
+  const cfg = STATUS_CONFIG[current] || STATUS_CONFIG.unmarked;
 
   return (
-    <div className="relative group inline-flex max-w-[110px] w-full items-center justify-center">
-      <select
+    <div className="relative w-full flex justify-center items-center h-full px-2 py-1.5">
+      <Dropdown
+        options={STATUSES.filter(s => s !== 'leave' && s !== 'holiday').map(s => ({
+          value: s,
+          label: STATUS_CONFIG[s].label,
+        }))}
         value={current}
-        onChange={(e) => pick(e.target.value as AttendanceStatus)}
-        disabled={saving}
-        className={`
-          appearance-none w-full px-1 py-1.5 rounded-lg text-[11px] uppercase tracking-widest text-center
-          cursor-pointer transition-all duration-200 select-none shadow-xs
-          ${cfg.color} ${cfg.bg}
-          ${saving ? "opacity-50 cursor-not-allowed scale-95" : "hover:shadow-sm hover:-translate-y-0.5"}
-          focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-brand-subtle
-        `}
-      >
-        {STATUSES.map((s) => {
-          const c = STATUS_CONFIG[s];
-          return (
-            <option key={s} value={s}>
-              {c.label}
-            </option>
-          );
-        })}
-      </select>
+        onChange={(val) => pick(val as AttendanceStatus)}
+        menuClassName="w-[160px] bg-white border-slate-200 shadow-2xl rounded-lg"
+        itemClassName="text-[11px] font-black tracking-widest uppercase py-3 hover:bg-slate-100 text-slate-900 border-b border-slate-50 last:border-0"
+        trigger={
+          <div className={cn(
+            "w-full h-8 px-3 flex items-center justify-center text-[10px] font-black tracking-widest border rounded-md transition-all cursor-pointer select-none ring-offset-2 ring-offset-background active:scale-95",
+            cfg.badge,
+            saving && "opacity-50 grayscale"
+          )}>
+            {cfg.label}
+          </div>
+        }
+      />
       {saving && (
-        <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-hover opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-primary"></span>
+        <span className="absolute top-1 right-2 flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-primary"></span>
         </span>
       )}
     </div>
   );
 }
 
-/* ── Props ───────────────────────────────────────────────── */
 interface AttendanceTableProps {
   from: string;
   to: string;
@@ -132,7 +152,6 @@ interface AttendanceTableProps {
 
 const PAGE_SIZE = 15;
 
-/* ── AttendanceTable ─────────────────────────────────────── */
 export default function AttendanceTable({ from, to }: AttendanceTableProps) {
   const [employees, setEmployees] = useState<AttendanceEmployee[]>([]);
   const [dates, setDates] = useState<string[]>([]);
@@ -143,10 +162,6 @@ export default function AttendanceTable({ from, to }: AttendanceTableProps) {
     totalPages: 1,
   });
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [error, setError] = useState<string | null>(null);
-
-  /* search */
   const [search, setSearch] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchRef = useRef(search);
@@ -163,13 +178,14 @@ export default function AttendanceTable({ from, to }: AttendanceTableProps) {
   const load = useCallback(
     async (page = 1) => {
       setLoading(true);
-      setError(null);
       try {
         const res = await fetchAttendance(from, to, page, PAGE_SIZE, searchRef.current);
         setEmployees(res.employees);
         setDates(res.dates);
-      } catch {
-        setError("Failed to load attendance");
+        // Res.pagination is expected to be present
+        if (res.pagination) setPagination(res.pagination);
+      } catch (err) {
+        console.error("Attendance fetch error:", err);
       } finally {
         setLoading(false);
       }
@@ -199,287 +215,176 @@ export default function AttendanceTable({ from, to }: AttendanceTableProps) {
   const { page, total, totalPages } = pagination;
   const startItem = (page - 1) * PAGE_SIZE + 1;
   const endItem = Math.min(page * PAGE_SIZE, total);
-  const colCount = 2 + dates.length;
 
   return (
-    <div className="w-full flex flex-col h-full bg-surface-base">
-      {/* Header */}
-      <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-default border-dashed">
+    <div className="w-full max-w-[1600px] mx-auto flex flex-col h-full bg-surface-base dark:bg-slate-950 transition-colors duration-300">
+      {/* Header Actions */}
+      <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-default dark:border-slate-800">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold tracking-tight text-text-primary">
+          <h2 className="text-xl font-bold tracking-tight text-text-primary dark:text-slate-100 italic">
             Personnel Register
           </h2>
           {!loading ? (
             <p className="text-[12px] font-medium text-text-tertiary">
-              Auditing <span className="text-text-secondary">{total} members</span> across a <span className="text-text-secondary">{dates.length}-day</span> window.
+              <span className="text-brand-primary">{total} members</span> identified in this cycle.
             </p>
           ) : <div className="h-4 w-40 mt-1 animate-pulse rounded bg-surface-muted" />}
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Search */}
           <div className="relative max-w-[280px] w-full">
-            <IoSearchOutline
-              size={18}
-              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-tertiary pointer-events-none"
-            />
+            <IoSearchOutline size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-tertiary pointer-events-none" />
             <input
               type="text"
-              placeholder="Search employee…"
+              placeholder="Filter roster..."
               value={search}
               onChange={(e) => handleSearchChange(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  if (debounceRef.current) clearTimeout(debounceRef.current);
-                  load(1);
-                }
-              }}
-              className="w-full pl-10 pr-9 py-2 text-[13px] rounded-xl border bg-surface-base outline-none transition-all hover:bg-surface-hover focus:bg-surface-base focus:border-brand-primary focus:ring-4 focus:ring-brand-subtle placeholder:text-text-tertiary border-border-default text-text-primary"
+              className="w-full pl-10 pr-9 py-2 text-[13px] rounded-xl border bg-surface-base dark:bg-slate-900 border-border-default dark:border-slate-800 focus:border-brand-primary focus:ring-4 focus:ring-brand-subtle outline-none transition-all text-text-primary dark:text-slate-200"
             />
-            {search && (
-              <button
-                onClick={() => {
-                  setSearch("");
-                  searchRef.current = "";
-                  load(1);
-                }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-primary transition-colors p-1"
-              >
-                <IoCloseOutline size={16} />
-              </button>
-            )}
           </div>
-
-          {/* Refresh */}
           <button
             onClick={() => load(page)}
-            className="p-2 rounded-xl text-text-secondary hover:text-brand-primary hover:bg-brand-subtle transition-colors border bg-surface-base shadow-sm border-border-default"
-            title="Refresh Table"
+            className="p-2.5 rounded-xl text-text-secondary hover:text-brand-primary bg-surface-base dark:bg-slate-900 border border-border-default dark:border-slate-800 transition-all shadow-sm hover:shadow-md active:scale-95"
           >
             <IoRefreshOutline size={18} />
           </button>
         </div>
       </div>
 
-      {/* Table Area */}
-      <div className="flex-1 w-full overflow-hidden">
-        {/* Mobile View */}
-        <div className="lg:hidden divide-y divide-border-default">
-          {loading ? (
-            Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="p-5 space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full animate-pulse bg-surface-muted" />
-                  <div className="space-y-2">
-                    <div className="h-4 w-32 animate-pulse rounded bg-surface-muted" />
-                    <div className="h-3 w-20 animate-pulse rounded bg-surface-muted" />
+      {/* Main Grid Wrapper */}
+      <div className="flex-1 overflow-hidden flex flex-col">
+        <div className="flex-1 overflow-x-auto thin-scrollbar relative">
+          <div className="min-w-max w-full">
+            {/* Grid Header */}
+            <div className={`${GRID_LAYOUT} border-b border-border-default dark:border-slate-800 bg-surface-base dark:bg-slate-950 sticky top-0 z-30`}>
+              <div className="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-text-tertiary sticky left-0 bg-surface-base dark:bg-slate-950 z-40 border-r border-border-subtle dark:border-slate-800 flex items-center">
+                Employee Details
+              </div>
+              {dates.map((d) => {
+                const { num, day } = dayLabel(d);
+                const isTodayDate = isToday(d);
+                return (
+                  <div key={d} className="px-4 py-3 flex flex-col items-center justify-center border-r border-border-subtle dark:border-slate-800/10 last:border-0">
+                    <span className={`text-sm font-black ${isTodayDate ? 'text-brand-primary' : 'text-text-primary dark:text-slate-200'}`}>{num}</span>
+                    <span className={`text-[9px] font-bold uppercase tracking-widest ${isTodayDate ? 'text-brand-primary/70' : 'text-text-tertiary'}`}>{day}</span>
                   </div>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {Array.from({ length: 4 }).map((_, j) => (
-                    <div key={j} className="h-10 animate-pulse rounded-lg bg-surface-muted" />
-                  ))}
-                </div>
+                );
+              })}
+              <div className="flex items-center justify-center text-[10px] font-bold text-text-tertiary">
+                {/* Actions placeholder */}
               </div>
-            ))
-          ) : employees.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 px-6 text-center animate-fade-in">
-              <div className="w-20 h-20 rounded-full bg-surface-muted flex items-center justify-center mb-6 text-text-tertiary border border-border-default shadow-sm lg:shadow-none">
-                <BiCalendarX size={40} className="text-text-tertiary/60" />
-              </div>
-              <h3 className="text-lg font-bold text-text-primary">No records for this cycle</h3>
-              <p className="text-sm text-text-secondary mt-2 max-w-xs leading-relaxed">
-                {search
-                  ? `We couldn't locate any records matching "${search}". Please refine your criteria.`
-                  : "The duty roster is currently empty for the selected window. Please adjust the date filter."}
-              </p>
             </div>
-          ) : (
-            employees.map((emp) => {
-              const deptColors = DEPARTMENT_COLORS[emp.department as Department] ?? DEPARTMENT_COLORS["Engineering"];
-              const initials = emp.name.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase();
 
-              return (
-                <div key={String(emp._id)} className="p-5 space-y-4 bg-surface-base hover:bg-surface-hover transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 bg-brand-subtle text-brand-primary ring-1 ring-brand-muted shadow-sm">
-                        {initials}
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-text-primary">{emp.name}</p>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-[10px] font-mono text-text-tertiary">#{emp.id}</span>
-                          <span className={`badge-base ${deptColors.badge}`}>
-                            {emp.department}
-                          </span>
-                        </div>
+            {/* Grid Body */}
+            <div className="divide-y divide-border-default dark:divide-slate-800">
+              {loading ? (
+                Array.from({ length: 10 }).map((_, i) => (
+                  <div key={i} className={`${GRID_LAYOUT} min-h-[72px] animate-pulse`}>
+                    <div className="px-6 py-4 flex items-center gap-4 bg-surface-base dark:bg-slate-950 sticky left-0 border-r border-border-subtle dark:border-slate-800 z-20">
+                      <div className="w-10 h-10 rounded-full bg-surface-muted dark:bg-slate-800" />
+                      <div className="space-y-2">
+                        <div className="h-4 w-32 bg-surface-muted dark:bg-slate-800 rounded" />
+                        <div className="h-3 w-20 bg-surface-muted dark:bg-slate-800 rounded" />
                       </div>
                     </div>
+                    {Array.from({ length: 8 }).map((__, j) => (
+                      <div key={j} className="px-4 py-4 flex justify-center items-center">
+                        <div className="h-8 w-24 bg-surface-muted dark:bg-slate-800 rounded-md" />
+                      </div>
+                    ))}
                   </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                    {dates.map((d) => {
-                      const rec = emp.attendance[d];
-                      const { num, day } = dayLabel(d);
-                      const isTodayDate = isToday(d);
-                      return (
-                        <div key={d} className={`flex flex-col items-center justify-center p-2.5 rounded-xl border transition-colors ${isTodayDate ? 'bg-brand-subtle border-brand-primary/20' : 'bg-surface-muted border-border-default'}`}>
-                          <div className="flex items-center gap-1.5 mb-1.5">
-                            <span className={`text-base font-bold ${isTodayDate ? 'text-brand-primary' : 'text-text-primary'}`}>{num}</span>
-                            <span className={`text-[9px] font-bold uppercase tracking-widest ${isTodayDate ? 'text-brand-primary' : 'text-text-tertiary'}`}>{day}</span>
-                          </div>
-                          <StatusCell
-                            employeeId={String(emp._id)}
-                            date={d}
-                            current={rec?.status ?? "unmarked"}
-                            note={rec?.note}
-                            onSaved={handleSaved}
-                          />
-                        </div>
-                      );
-                    })}
+                ))
+              ) : employees.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-32 text-center bg-surface-base dark:bg-slate-950">
+                  <div className="w-20 h-20 rounded-full bg-surface-muted dark:bg-slate-900 flex items-center justify-center mb-6 text-text-tertiary">
+                    <BiCalendarX size={40} />
                   </div>
+                  <h3 className="text-lg font-bold text-text-primary dark:text-slate-100">No records found</h3>
+                  <p className="text-sm text-text-secondary mt-2 max-w-xs">{search ? `No matches for "${search}"` : "The register is empty for this period."}</p>
                 </div>
-              );
-            })
-          )}
-        </div>
-
-        {/* Desktop View */}
-        <div className="hidden lg:block w-full overflow-x-auto thin-scrollbar pb-4 min-h-[400px]">
-          {employees.length === 0 && !loading ? (
-            <div className="flex flex-col items-center justify-center py-28 text-center animate-fade-in">
-              <div className="w-24 h-24 rounded-full bg-surface-muted flex items-center justify-center mb-6 text-text-tertiary/40 border border-border-default shadow-sm">
-                <BiCalendarX size={48} />
-              </div>
-              <h3 className="text-xl font-bold text-text-primary">No activity detected</h3>
-              <p className="text-sm text-text-secondary mt-2 max-w-sm leading-relaxed">
-                {search
-                  ? `Our indices returned no results for "${search}". Verify the spelling or try a different keyword.`
-                  : "The selected operational window contains no attendance data. Modify your selection to view historical records."}
-              </p>
-            </div>
-          ) : (
-            <table className="w-full text-left border-collapse min-w-max">
-              <thead>
-                <tr className="bg-surface-base">
-                  <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap border-b border-border-default text-text-secondary sticky left-0 z-10 bg-surface-base">
-                    Employee
-                  </th>
-                  <th className="px-5 py-4 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap border-b border-border-default text-text-secondary">
-                    Department
-                  </th>
-                  {dates.map((d) => {
-                    const { num, day } = dayLabel(d);
-                    const isTodayDate = isToday(d);
-                    return (
-                      <th key={d} className="px-4 py-3 text-center whitespace-nowrap border-b border-border-default w-[120px]">
-                        <div className={`inline-flex flex-col items-center justify-center p-2 rounded-xl transition-colors ${isTodayDate ? 'bg-brand-subtle text-brand-primary shadow-sm ring-1 ring-inset ring-brand-muted' : ''}`}>
-                          <span className={`text-sm font-bold ${!isTodayDate && 'text-text-primary'}`}>{num}</span>
-                          <span className={`text-[9px] font-bold uppercase tracking-widest ${!isTodayDate && 'text-text-tertiary'}`}>{day}</span>
-                        </div>
-                      </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-
-              <tbody className="divide-y divide-border-default">
-                {loading ? (
-                  Array.from({ length: 6 }).map((_, i) => (
-                    <tr key={i}>
-                      {Array.from({ length: colCount }).map((__, j) => (
-                        <td key={j} className={`px-6 py-4 ${j === 0 ? 'sticky left-0 bg-surface-base' : ''}`}>
-                          <div className="h-5 rounded animate-pulse bg-surface-muted" />
-                        </td>
-                      ))}
-                    </tr>
-                  ))
-                ) : employees.map((emp) => {
+              ) : (
+                employees.map((emp, idx) => {
                   const deptColors = DEPARTMENT_COLORS[emp.department as Department] ?? DEPARTMENT_COLORS["Engineering"];
                   const initials = emp.name.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase();
 
                   return (
-                    <tr key={String(emp._id)} className="group transition-colors hover:bg-surface-hover">
-                      <td className="px-6 py-3 w-[260px] sticky left-0 z-10 bg-surface-base group-hover:bg-surface-hover transition-colors shadow-[min(1px,calc(1px*max(0,1)))_0_0_0_var(--border)]">
-                        <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 bg-brand-subtle text-brand-primary ring-1 ring-brand-muted shadow-xs">
+                    <div key={String(emp._id)} className={`${GRID_LAYOUT} min-h-[72px] group transition-all hover:bg-slate-50 dark:hover:bg-slate-900/40 relative ${idx % 2 === 1 ? 'bg-slate-50/30 dark:bg-slate-900/10' : 'bg-surface-base dark:bg-slate-950'}`}>
+                      {/* Employee Cell (Sticky) */}
+                      <div className="px-6 py-4 flex items-center justify-between gap-4 sticky left-0 z-20 bg-inherit border-r border-border-subtle dark:border-slate-800 group-hover:bg-inherit">
+                        <div className="flex items-center gap-4 min-w-0">
+                          <div className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-black shrink-0 bg-brand-subtle text-brand-primary ring-1 ring-brand-muted/20 shadow-sm transition-transform group-hover:scale-110">
                             {initials}
                           </div>
                           <div className="min-w-0">
-                            <p className="text-sm font-semibold leading-tight truncate text-text-primary group-hover:text-brand-primary transition-colors">{emp.name}</p>
-                            <p className="text-[11px] font-mono text-text-tertiary mt-0.5">{emp.employeeId || `#${emp.id}`}</p>
+                            <p className="text-[14px] font-bold text-text-primary dark:text-slate-100 truncate leading-tight">{emp.name}</p>
+                            <p className="text-[11px] font-bold text-text-tertiary mt-1 font-mono uppercase tracking-tighter">
+                              {emp.employeeId || `#${emp.id}`}
+                            </p>
                           </div>
                         </div>
-                      </td>
-                      <td className="px-5 py-3 w-[180px]">
-                        <span className={`badge-base ${deptColors.badge}`}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${deptColors.dot}`} />
+                        <span className={`badge-base shrink-0 ${deptColors.badge} px-2 py-0.5 text-[9px] font-black uppercase tracking-tighter rounded-md`}>
                           {emp.department}
                         </span>
-                      </td>
+                      </div>
+
+                      {/* Attendance Cells */}
                       {dates.map((d) => {
                         const rec = emp.attendance[d];
                         return (
-                          <td key={d} className="px-2 py-3 text-center w-[120px]">
-                            <StatusCell employeeId={String(emp._id)} date={d} current={rec?.status ?? "unmarked"} note={rec?.note} onSaved={handleSaved} />
-                          </td>
+                          <div key={d} className="flex items-center justify-center border-r border-border-subtle dark:border-slate-800/10 last:border-0 hover:bg-white dark:hover:bg-slate-800/50 transition-colors">
+                            <StatusCell
+                              employeeId={String(emp._id)}
+                              date={d}
+                              current={rec?.status ?? "unmarked"}
+                              note={rec?.note}
+                              onSaved={handleSaved}
+                            />
+                          </div>
                         );
                       })}
-                    </tr>
+
+                      {/* Action Cell */}
+                      <div className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        {/* Action buttons could go here */}
+                      </div>
+                    </div>
                   );
-                })}
-              </tbody>
-            </table>
-          )}
+                })
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Pagination footer */}
+      {/* Pagination Footer */}
       {!loading && totalPages > 1 && (
-        <div className="flex items-center justify-between px-6 py-4 border-t border-border-default bg-surface-base">
-          <p className="text-[13px] font-medium text-text-secondary">
-            Showing <span className="font-semibold text-text-primary">{startItem}–{endItem}</span> of <span className="font-semibold text-text-primary">{total}</span> employees
+        <div className="px-6 py-4 border-t border-border-default dark:border-slate-800 bg-surface-base dark:bg-slate-950 flex items-center justify-between z-40">
+          <p className="text-[12px] font-bold text-text-tertiary">
+            Displaying <span className="text-text-secondary dark:text-slate-300">{startItem}—{endItem}</span> of <span className="text-text-secondary dark:text-slate-300">{total}</span> employees
           </p>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <button
               disabled={page <= 1}
               onClick={() => load(page - 1)}
-              className="p-1.5 rounded-lg border bg-surface-base text-text-secondary hover:text-brand-primary hover:border-brand-muted disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm border-border-default"
+              className="p-2 rounded-lg border border-border-default dark:border-slate-800 disabled:opacity-30 bg-surface-base dark:bg-slate-900 hover:bg-surface-hover dark:hover:bg-slate-800 transition-all active:scale-95"
             >
               <IoChevronBackOutline size={16} />
             </button>
-
-            <div className="hidden sm:flex items-center gap-1 mx-1">
-              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                const p =
-                  totalPages <= 5
-                    ? i + 1
-                    : page <= 3
-                      ? i + 1
-                      : page >= totalPages - 2
-                        ? totalPages - 4 + i
-                        : page - 2 + i;
-                return (
-                  <button
-                    key={p}
-                    onClick={() => load(p)}
-                    className={`min-w-[32px] h-8 rounded-lg text-[13px] font-bold transition-all shadow-sm ${p === page
-                      ? "bg-brand-primary text-white hover:bg-brand-hover border border-brand-hover"
-                      : "bg-surface-base border text-text-secondary hover:bg-surface-hover hover:text-text-primary border-border-default"
-                      }`}
-                  >
-                    {p}
-                  </button>
-                );
-              })}
+            <div className="flex items-center gap-1">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => load(i + 1)}
+                  className={`w-8 h-8 rounded-lg text-[12px] font-bold transition-all ${page === i + 1 ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/20 scale-110' : 'text-text-tertiary hover:bg-surface-hover dark:hover:bg-slate-800'}`}
+                >
+                  {i + 1}
+                </button>
+              ))}
             </div>
-
             <button
               disabled={page >= totalPages}
               onClick={() => load(page + 1)}
-              className="p-1.5 rounded-lg border bg-surface-base text-text-secondary hover:text-brand-primary hover:border-brand-muted disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm border-border-default"
+              className="p-2 rounded-lg border border-border-default dark:border-slate-800 disabled:opacity-30 bg-surface-base dark:bg-slate-900 hover:bg-surface-hover dark:hover:bg-slate-800 transition-all active:scale-95"
             >
               <IoChevronForwardOutline size={16} />
             </button>

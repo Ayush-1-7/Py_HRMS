@@ -5,6 +5,8 @@ export const ATTENDANCE_STATUSES = [
   "unmarked",
   "present",
   "absent",
+  "leave",
+  "holiday",
 ] as const;
 
 export type AttendanceStatus = (typeof ATTENDANCE_STATUSES)[number];

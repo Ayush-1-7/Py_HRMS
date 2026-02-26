@@ -3,10 +3,27 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { toast } from "sonner";
 import { useHotkeys } from "react-hotkeys-hook";
-import { IoCheckmarkCircle, IoAlertCircle, IoChevronDownOutline, IoPersonOutline, IoBriefcaseOutline, IoSettingsOutline, IoCloseOutline, IoMailOutline, IoCalendarOutline, IoCallOutline } from "react-icons/io5";
+import {
+    IoCheckmarkCircle,
+    IoAlertCircle,
+    IoPersonOutline,
+    IoBriefcaseOutline,
+    IoSettingsOutline,
+    IoCloseOutline,
+    IoMailOutline,
+    IoCalendarOutline,
+    IoCallOutline
+} from "react-icons/io5";
 import { DEPARTMENTS } from "@/lib/departments";
 import { ROLES } from "@/lib/roles";
 import { createEmployee, updateEmployee, checkEmployeeIdExists, type EmployeePayload } from "@/services/employeeService";
+import Dropdown from "@/components/ui/Dropdown";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+}
 
 interface AddEmployeeFormProps {
     onSuccess: () => void;
@@ -59,7 +76,6 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
     const [isDesignationFocused, setIsDesignationFocused] = useState(false);
     const [designationQuery, setDesignationQuery] = useState("");
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const empIdDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     /* Populate on Edit */
     useEffect(() => {
@@ -136,7 +152,6 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
 
     const handleEmployeeIdChange = (val: string) => {
         setForm(f => ({ ...f, employeeId: val.toUpperCase() }));
-        // In a real app, you'd check uniqueness for this too.
         setEmpIdStatus("ok");
     };
 
@@ -212,7 +227,7 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="md:col-span-1">
-                            <label htmlFor="id" className={labelClass} aria-label="System ID">
+                            <label htmlFor="id" className={labelClass}>
                                 System Numeric ID <span className="text-danger">*</span>
                             </label>
                             <div className="relative group">
@@ -234,12 +249,12 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                                     {!isEdit && idStatus === "taken" && <IoAlertCircle className="text-danger" size={20} />}
                                 </div>
                             </div>
-                            {errors.id && <p className="text-[10px] text-danger mt-2 ml-1 font-bold animate-fade-in">{errors.id}</p>}
+                            {errors.id && <p className="text-[10px] text-danger mt-2 ml-1 font-bold">{errors.id}</p>}
                         </div>
 
                         <div className="md:col-span-1">
-                            <label htmlFor="employeeId" className={labelClass} aria-label="Employee ID">
-                                Employee ID (Human-Readable) <span className="text-danger">*</span>
+                            <label htmlFor="employeeId" className={labelClass}>
+                                Employee ID <span className="text-danger">*</span>
                             </label>
                             <div className="relative group">
                                 <IoBriefcaseOutline className={iconWrapperClass} size={18} />
@@ -251,14 +266,11 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                                     onChange={(e) => handleEmployeeIdChange(e.target.value)}
                                     className={`${inputClass} ${empIdStatus === 'ok' ? 'border-success' : ''}`}
                                 />
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                                    {empIdStatus === "ok" && <IoCheckmarkCircle className="text-success" size={20} />}
-                                </div>
                             </div>
                         </div>
 
                         <div className="md:col-span-1">
-                            <label htmlFor="name" className={labelClass} aria-label="Full Name">
+                            <label htmlFor="name" className={labelClass}>
                                 Full Name <span className="text-danger">*</span>
                             </label>
                             <div className="relative group">
@@ -272,11 +284,11 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                                     className={`${inputClass} ${errors.name ? 'border-danger' : ''}`}
                                 />
                             </div>
-                            {errors.name && <p className="text-[10px] text-danger mt-2 ml-1 font-bold animate-fade-in">{errors.name}</p>}
+                            {errors.name && <p className="text-[10px] text-danger mt-2 ml-1 font-bold">{errors.name}</p>}
                         </div>
 
                         <div className="md:col-span-1">
-                            <label htmlFor="email" className={labelClass} aria-label="Email Address">
+                            <label htmlFor="email" className={labelClass}>
                                 Email Address <span className="text-danger">*</span>
                             </label>
                             <div className="relative group">
@@ -293,7 +305,7 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                                     className={`${inputClass} ${errors.email ? 'border-danger' : ''}`}
                                 />
                             </div>
-                            {errors.email && <p className="text-[10px] text-danger mt-2 ml-1 font-bold animate-fade-in">{errors.email}</p>}
+                            {errors.email && <p className="text-[10px] text-danger mt-2 ml-1 font-bold">{errors.email}</p>}
                         </div>
                     </div>
                 </div>
@@ -304,35 +316,29 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                         <div className="w-8 h-8 rounded-lg bg-accent-subtle text-accent-primary flex items-center justify-center">
                             <IoBriefcaseOutline size={18} />
                         </div>
-                        Professional Role & Compensation
+                        Professional Role
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label htmlFor="department" className={labelClass} aria-label="Department">
+                            <label htmlFor="department" className={labelClass}>
                                 Department <span className="text-danger">*</span>
                             </label>
-                            <div className="relative group">
-                                <IoSettingsOutline className={iconWrapperClass} size={18} />
-                                <select
-                                    id="department"
-                                    value={form.department}
-                                    onChange={(e) => {
-                                        setForm(f => ({ ...f, department: e.target.value }));
-                                        validateField("department", e.target.value);
-                                    }}
-                                    className={`${inputClass} appearance-none pr-10 cursor-pointer`}
-                                >
-                                    <option value="">Select Department</option>
-                                    {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
-                                </select>
-                                <IoChevronDownOutline className="absolute right-4 top-1/2 -translate-y-1/2 text-text-tertiary pointer-events-none group-focus-within:text-brand-primary transition-colors" />
-                            </div>
-                            {errors.department && <p className="text-[10px] text-danger mt-2 ml-1 font-bold animate-fade-in">{errors.department}</p>}
+                            <Dropdown
+                                options={DEPARTMENTS.map(d => ({ value: d, label: d }))}
+                                value={form.department}
+                                onChange={(val) => {
+                                    setForm(f => ({ ...f, department: val }));
+                                    validateField("department", val);
+                                }}
+                                placeholder="Select Department"
+                                className="w-full h-11"
+                            />
+                            {errors.department && <p className="text-[10px] text-danger mt-2 ml-1 font-bold">{errors.department}</p>}
                         </div>
 
                         <div className="relative group">
-                            <label htmlFor="designation" className={labelClass} aria-label="Designation">
+                            <label htmlFor="designation" className={labelClass}>
                                 Designation <span className="text-danger">*</span>
                             </label>
                             <div className="relative">
@@ -352,7 +358,7 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                                     className={`${inputClass} ${errors.designation ? 'border-danger' : ''}`}
                                 />
                             </div>
-                            {errors.designation && <p className="text-[10px] text-danger mt-2 ml-1 font-bold animate-fade-in">{errors.designation}</p>}
+                            {errors.designation && <p className="text-[10px] text-danger mt-2 ml-1 font-bold">{errors.designation}</p>}
                             {isDesignationFocused && filteredRoles.length > 0 && (
                                 <div className="absolute top-full left-0 w-full mt-2 bg-surface-base/90 backdrop-blur-xl border border-border-default rounded-xl shadow-2xl z-20 overflow-hidden animate-fade-in-up">
                                     {filteredRoles.map(role => (
@@ -375,7 +381,7 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                         </div>
 
                         <div>
-                            <label htmlFor="salary" className={labelClass} aria-label="Annual Salary">
+                            <label htmlFor="salary" className={labelClass}>
                                 Annual Salary ($)
                             </label>
                             <div className="relative group">
@@ -392,24 +398,20 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                         </div>
 
                         <div>
-                            <label htmlFor="employmentType" className={labelClass} aria-label="Employment Type">
+                            <label htmlFor="employmentType" className={labelClass}>
                                 Employment Type
                             </label>
-                            <div className="relative group">
-                                <IoBriefcaseOutline className={iconWrapperClass} size={18} />
-                                <select
-                                    id="employmentType"
-                                    value={form.employmentType}
-                                    onChange={(e) => setForm(f => ({ ...f, employmentType: e.target.value as any }))}
-                                    className={`${inputClass} appearance-none pr-10 cursor-pointer`}
-                                >
-                                    <option value="full-time">Full-time</option>
-                                    <option value="part-time">Part-time</option>
-                                    <option value="contract">Contract</option>
-                                    <option value="intern">Intern</option>
-                                </select>
-                                <IoChevronDownOutline className="absolute right-4 top-1/2 -translate-y-1/2 text-text-tertiary pointer-events-none group-focus-within:text-brand-primary transition-colors" />
-                            </div>
+                            <Dropdown
+                                options={[
+                                    { value: "full-time", label: "Full-time" },
+                                    { value: "part-time", label: "Part-time" },
+                                    { value: "contract", label: "Contract" },
+                                    { value: "intern", label: "Intern" }
+                                ]}
+                                value={form.employmentType}
+                                onChange={(val) => setForm(f => ({ ...f, employmentType: val as any }))}
+                                className="w-full h-11"
+                            />
                         </div>
                     </div>
                 </div>
@@ -425,7 +427,7 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label htmlFor="joiningDate" className={labelClass} aria-label="Joining Date">
+                            <label htmlFor="joiningDate" className={labelClass}>
                                 Joining Date
                             </label>
                             <div className="relative group">
@@ -441,7 +443,7 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                         </div>
 
                         <div>
-                            <label htmlFor="phone" className={labelClass} aria-label="Phone Number">
+                            <label htmlFor="phone" className={labelClass}>
                                 Phone Number
                             </label>
                             <div className="relative group">
@@ -458,31 +460,27 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                         </div>
 
                         <div>
-                            <label htmlFor="status" className={labelClass} aria-label="Lifecycle Status">
+                            <label htmlFor="status" className={labelClass}>
                                 Current Status
                             </label>
-                            <div className="relative group">
-                                <IoSettingsOutline className={iconWrapperClass} size={18} />
-                                <select
-                                    id="status"
-                                    value={form.status}
-                                    onChange={(e) => setForm(f => ({ ...f, status: e.target.value as any }))}
-                                    className={`${inputClass} appearance-none pr-10 cursor-pointer`}
-                                >
-                                    <option value="active">Active</option>
-                                    <option value="on leave">On Leave</option>
-                                    <option value="probation">Probation</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
-                                <IoChevronDownOutline className="absolute right-4 top-1/2 -translate-y-1/2 text-text-tertiary pointer-events-none group-focus-within:text-brand-primary transition-colors" />
-                            </div>
+                            <Dropdown
+                                options={[
+                                    { value: "active", label: "Active" },
+                                    { value: "on leave", label: "On Leave" },
+                                    { value: "probation", label: "Probation" },
+                                    { value: "inactive", label: "Inactive" }
+                                ]}
+                                value={form.status}
+                                onChange={(val) => setForm(f => ({ ...f, status: val as any }))}
+                                className="w-full h-11"
+                            />
                         </div>
                     </div>
                 </div>
             </form>
 
             {/* Action Bar */}
-            <div className="mt-auto py-8 border-t border-border-default flex flex-col-reverse md:flex-row items-center justify-end gap-4 animate-fade-in">
+            <div className="mt-auto py-8 border-t border-border-default flex flex-col-reverse md:flex-row items-center justify-end gap-4">
                 <button
                     type="button"
                     onClick={onCancel}

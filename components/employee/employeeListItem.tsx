@@ -5,6 +5,7 @@ import { IoBriefcaseOutline, IoEllipsisHorizontal, IoCreateOutline, IoTrashOutli
 import { DEPARTMENT_COLORS, type Department } from "@/lib/departments";
 import type { IEmployee } from "@/models/Employee";
 import { useState, useRef, useEffect } from "react";
+import Dropdown from "@/components/ui/Dropdown";
 
 interface EmployeeListItemProps {
   employee: IEmployee;
@@ -27,22 +28,8 @@ export default function EmployeeListItem({
   onDelete,
   index = 0,
 }: EmployeeListItemProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
   const mongoId = String(employee._id);
-
-  /* close menu on outside click */
-  useEffect(() => {
-    if (!menuOpen) return;
-    const handler = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, [menuOpen]);
 
   const deptColors =
     DEPARTMENT_COLORS[employee.department as Department] ??
@@ -158,41 +145,22 @@ export default function EmployeeListItem({
           className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} w-12 text-right border-b border-border-default`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="relative inline-block" ref={menuRef}>
-            <button
-              onClick={() => setMenuOpen((v) => !v)}
-              className="p-1.5 rounded-full transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100 hover:bg-surface-hover text-text-primary"
-            >
-              <IoEllipsisHorizontal size={18} />
-            </button>
-            {menuOpen && (
-              <div
-                className="absolute right-0 top-10 z-20 w-40 rounded-xl shadow-lg border overflow-hidden py-1.5 origin-top-right animate-in fade-in zoom-in-95 duration-200 bg-surface-base border-border-default"
-              >
-                <button
-                  onClick={() => {
-                    setMenuOpen(false);
-                    onEdit(employee);
-                  }}
-                  className="flex items-center gap-2.5 w-full px-4 py-2 text-sm font-medium transition-colors hover:bg-surface-hover text-text-primary"
-                >
-                  <IoCreateOutline size={16} className="text-brand-primary" />
-                  Edit Profile
-                </button>
-                <div className="my-1 border-t border-border-default" />
-                <button
-                  onClick={() => {
-                    setMenuOpen(false);
-                    onDelete(employee);
-                  }}
-                  className="flex items-center gap-2.5 w-full px-4 py-2 text-sm font-medium text-danger hover:bg-danger-subtle transition-colors"
-                >
-                  <IoTrashOutline size={16} />
-                  Remove
-                </button>
+          <Dropdown
+            options={[
+              { value: "edit", label: "Edit Profile", icon: <IoCreateOutline size={16} className="text-brand-primary" /> },
+              { value: "delete", label: "Remove", icon: <IoTrashOutline size={16} className="text-danger" /> }
+            ]}
+            value=""
+            onChange={(val) => {
+              if (val === "edit") onEdit(employee);
+              if (val === "delete") onDelete(employee);
+            }}
+            trigger={
+              <div className="p-1.5 rounded-full transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100 hover:bg-surface-hover text-text-primary">
+                <IoEllipsisHorizontal size={18} />
               </div>
-            )}
-          </div>
+            }
+          />
         </td>
       </tr>
 

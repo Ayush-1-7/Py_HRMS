@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { BRANDING } from "@/lib/constants";
 import ThemeToggle from "./ThemeToggle";
+import Dropdown from "@/components/ui/Dropdown";
+import { IoPersonCircleOutline, IoSettingsOutline, IoLogOutOutline } from "react-icons/io5";
 
 /* ── Page title map ─────────────────────────────────────── */
 const pageTitles: Record<string, string> = {
@@ -95,10 +97,26 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
 
         <ThemeToggle />
 
-        {/* User Avatar Placeholder */}
-        <div className="hidden sm:flex items-center justify-center w-9 h-9 rounded-full border border-border-default bg-brand-subtle text-brand-primary font-semibold text-sm cursor-pointer shadow-xs transition-transform hover:scale-105">
-          AD
-        </div>
+        {/* User Avatar / Dropdown */}
+        <Dropdown
+          options={[
+            { value: "profile", label: "My Profile", icon: <IoPersonCircleOutline size={18} className="text-brand-primary" /> },
+            { value: "settings", label: "Settings", icon: <IoSettingsOutline size={18} className="text-slate-400" /> },
+            { value: "logout", label: "Sign Out", icon: <IoLogOutOutline size={18} className="text-danger" /> }
+          ]}
+          value=""
+          onChange={(val) => {
+            if (val === "logout") {
+              // Handle logout logic if needed, for now just toast or redirect
+              window.location.href = "/";
+            }
+          }}
+          trigger={
+            <div className="flex items-center justify-center w-9 h-9 rounded-full border border-border-default bg-brand-subtle text-brand-primary font-semibold text-sm cursor-pointer shadow-xs transition-transform hover:scale-105 active:scale-95 group">
+              AD
+            </div>
+          }
+        />
       </div>
     </header>
   );

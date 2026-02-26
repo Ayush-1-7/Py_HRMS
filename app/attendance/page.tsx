@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { IoCalendarOutline, IoChevronDownOutline } from "react-icons/io5";
+import Dropdown from "@/components/ui/Dropdown";
 import AttendanceTable from "@/components/attendance/AttendanceTable";
 import { BiInfoCircle } from "react-icons/bi";
 
@@ -83,18 +84,15 @@ export default function AttendancePage() {
       <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 card-base p-5 shadow-sm border border-border-default animate-fade-in-up stagger-2">
 
         {/* Month picker */}
-        <div className="relative flex items-center w-full xl:w-auto min-w-[240px]">
-          <IoCalendarOutline size={18} className="absolute left-4 pointer-events-none text-text-tertiary" />
-          <select
+        <div className="relative flex items-center w-full xl:w-auto min-w-[280px]">
+          <Dropdown
+            options={monthOptions().map(o => ({ value: o.value, label: o.label }))}
             value={activeMonth}
-            onChange={(e) => handleMonthSelect(e.target.value)}
-            className={`${inputClass} w-full pl-11 pr-10 appearance-none`}
-          >
-            {monthOptions().map((o) => (
-              <option key={o.value} value={o.value}>{o.label}</option>
-            ))}
-          </select>
-          <IoChevronDownOutline size={16} className="absolute right-4 pointer-events-none text-text-tertiary" />
+            onChange={(val) => handleMonthSelect(val)}
+            icon={<IoCalendarOutline size={18} />}
+            className="w-full"
+            placeholder="Select Month"
+          />
         </div>
 
         {/* Divider */}
