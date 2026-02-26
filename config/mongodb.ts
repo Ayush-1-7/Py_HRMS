@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
-if (!MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI environment variable in .env.local");
-}
-
 // Cached connection for Next.js hot-reload compatibility
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -22,6 +18,10 @@ const cached: MongooseCache = global._mongoose ?? { conn: null, promise: null };
 global._mongoose = cached;
 
 export async function connectDB(): Promise<typeof mongoose> {
+  if (!MONGODB_URI) {
+    throw new Error("Please define the MONGODB_URI environment variable in .env.local or Vercel dashboard");
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
