@@ -10,6 +10,8 @@ import AttendanceTrend from "@/components/dashboard/AttendanceTrend";
 import DepartmentDistribution from "@/components/dashboard/DepartmentDistribution";
 import AttendanceSummary from "@/components/dashboard/AttendanceSummary";
 import type { IEmployee } from "@/models/Employee";
+import DocumentationModal from "@/components/dashboard/DocumentationModal";
+import { IoDocumentTextOutline } from "react-icons/io5";
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({
@@ -23,6 +25,7 @@ export default function DashboardPage() {
   const [attendanceTrend, setAttendanceTrend] = useState<{ date: string; present: number; absent: number }[]>([]);
   const [deptDistribution, setDeptDistribution] = useState<{ name: string; value: number }[]>([]);
   const [loading, setLoading] = useState(true);
+  const [docModalOpen, setDocModalOpen] = useState(false);
 
   useEffect(() => {
     async function loadDashboardData() {
@@ -296,7 +299,11 @@ export default function DashboardPage() {
               <p className="text-xs text-white/80 leading-relaxed">
                 Review our latest enterprise HR guidelines for 2026. Includes updated compliance and tax templates.
               </p>
-              <button className="px-4 py-2 bg-white text-brand-primary rounded-lg text-xs font-bold hover:bg-surface-hover transition-colors">
+              <button
+                onClick={() => setDocModalOpen(true)}
+                className="group flex items-center gap-2 px-5 py-2.5 bg-white text-brand-primary rounded-xl text-[13px] font-bold shadow-lg shadow-black/10 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] transition-all ring-1 ring-white/50"
+              >
+                <IoDocumentTextOutline size={18} className="group-hover:rotate-6 transition-transform" />
                 Read Documentation
               </button>
             </div>
@@ -304,6 +311,8 @@ export default function DashboardPage() {
           </section>
         </div>
       </div>
+
+      <DocumentationModal open={docModalOpen} onClose={() => setDocModalOpen(false)} />
     </div>
   );
 }
