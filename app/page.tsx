@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import EmployeeList from "@/components/employee/employeeList";
 
 /* ── Page ───────────────────────────────────────────────── */
@@ -33,9 +34,12 @@ export default function EmployeesPage() {
 
         {/* ── Main card ── */}
         <div className="flex-1 bg-surface-base/90 backdrop-blur-3xl rounded-[2.5rem] border border-border-default/50 shadow-2xl overflow-hidden flex flex-col animate-fade-in stagger-2">
-          <EmployeeList />
+          <Suspense fallback={<div className="flex items-center justify-center h-full text-text-tertiary">Loading...</div>}>
+            <EmployeeList />
+          </Suspense>
         </div>
       </div>
     </div>
   );
 }
+

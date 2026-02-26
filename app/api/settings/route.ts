@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import Setting from "@/models/Setting";
-import dbConnect from "@/lib/db";
+import { connectDB } from "@/config/mongodb";
 
 export async function GET() {
     try {
-        await dbConnect();
+        await connectDB();
         let settings = await Setting.findOne();
         if (!settings) {
             settings = await Setting.create({
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
         */
 
         const body = await req.json();
-        await dbConnect();
+        await connectDB();
 
         let settings = await Setting.findOne();
         if (settings) {

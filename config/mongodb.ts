@@ -32,7 +32,8 @@ export async function connectDB(): Promise<typeof mongoose> {
       retryWrites: true,
       w: "majority",
       connectTimeoutMS: 10000,
-      serverSelectionTimeoutMS: 10000,
+      serverSelectionTimeoutMS: 5000,
+      maxPoolSize: 10,
     });
 
     cached.promise.catch(() => {
