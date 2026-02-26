@@ -39,7 +39,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   const navItems = [
     { label: "Dashboard", href: "/dashboard", icon: IoGridOutline, roles: ["admin", "employee"] },
-    { label: "Personnel", href: "/", icon: IoPeopleOutline, roles: ["admin"] },
+    { label: "Personnel", href: "/personnel", icon: IoPeopleOutline, roles: ["admin"] },
     { label: "Attendance", href: "/attendance", icon: IoCalendarOutline, roles: ["admin", "employee"] },
     { label: "Payroll", href: "/payroll", icon: IoWalletOutline, roles: ["admin"] },
     { label: "Reports", href: "/reports", icon: IoBarChartOutline, roles: ["admin"] },
@@ -90,9 +90,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
           <nav className="flex-1 flex flex-col gap-1 px-4">
             {filteredItems.map(({ label, href, icon: Icon }) => {
-              const active = href === "/"
-                ? pathname === "/" || pathname.startsWith("/employee/")
-                : pathname === href || pathname.startsWith(href + "/");
+              const active = pathname === href || pathname.startsWith(href + "/");
               return (
                 <Link
                   key={href}

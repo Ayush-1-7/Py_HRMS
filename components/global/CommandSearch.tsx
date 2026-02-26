@@ -8,7 +8,7 @@ import { IoSearchOutline, IoReturnDownBackOutline } from "react-icons/io5";
 /* ── Nav items (static) ─────────────────────────────────── */
 const navItems = [
   { label: "Command Center", href: "/dashboard", section: "Navigation" },
-  { label: "Team Directory", href: "/", section: "Navigation" },
+  { label: "Team Directory", href: "/personnel", section: "Navigation" },
   { label: "Attendance Tracker", href: "/attendance", section: "Navigation" },
   { label: "Payroll", href: "/payroll", section: "Navigation" },
   { label: "Reports", href: "/reports", section: "Navigation" },
