@@ -80,7 +80,7 @@ export default function EmployeeListItem({
         </td>
 
         {/* Employee ID */}
-        <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} text-xs font-mono tracking-wider font-bold text-text-tertiary border-b border-border-default`}>
+        <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} text-[13px] font-mono tracking-wider font-bold text-text-tertiary border-b border-border-default`}>
           {employee.employeeId || `#${employee.id}`}
         </td>
 
@@ -133,20 +133,20 @@ export default function EmployeeListItem({
         {/* Status */}
         <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} whitespace-nowrap border-b border-border-default text-center`}>
           <span
-            className={`inline-flex items-center gap-1.5 ${density === 'compact' ? 'text-[10px] px-2 py-0.5' : 'text-[11px] px-2.5 py-1'} font-bold uppercase tracking-widest rounded-full transition-all group-hover:ring-brand-primary ${employee.status === "active"
-                ? "bg-success-subtle text-success ring-1 ring-success shadow-sm"
-                : employee.status === "on leave"
-                  ? "bg-amber-subtle text-amber ring-1 ring-amber shadow-sm"
-                  : employee.status === "probation"
-                    ? "bg-indigo-subtle text-indigo ring-1 ring-indigo shadow-sm"
-                    : "bg-surface-muted text-text-secondary ring-1 ring-border-default shadow-sm"
+            className={`inline-flex items-center gap-1.5 ${density === 'compact' ? 'text-[11px] px-2 py-0.5' : 'text-[12px] px-2.5 py-1'} font-bold uppercase tracking-widest rounded-full transition-all group-hover:ring-brand-primary ${employee.status === "active"
+              ? "bg-success-subtle text-success ring-1 ring-success shadow-sm"
+              : employee.status === "on leave"
+                ? "bg-amber-subtle text-amber ring-1 ring-amber shadow-sm"
+                : employee.status === "probation"
+                  ? "bg-indigo-subtle text-indigo ring-1 ring-indigo shadow-sm"
+                  : "bg-surface-muted text-text-secondary ring-1 ring-border-default shadow-sm"
               }`}
           >
             <span
               className={`w-1.5 h-1.5 rounded-full ${employee.status === "active" ? "bg-success" :
-                  employee.status === "on leave" ? "bg-amber" :
-                    employee.status === "probation" ? "bg-indigo" :
-                      "bg-text-tertiary"
+                employee.status === "on leave" ? "bg-amber" :
+                  employee.status === "probation" ? "bg-indigo" :
+                    "bg-text-tertiary"
                 }`}
             />
             {employee.status}

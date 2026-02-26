@@ -576,7 +576,7 @@ export default function EmployeeList() {
                       className="w-4 h-4 rounded border-border-default text-brand-primary focus:ring-brand-subtle"
                     />
                   </th>
-                  <th className={`${density === 'compact' ? 'py-2' : 'py-4'} px-4 text-[11px] font-bold uppercase tracking-widest whitespace-nowrap border-b border-border-default text-text-tertiary`}>
+                  <th className={`${density === 'compact' ? 'py-2' : 'py-5'} px-5 text-[12px] font-bold uppercase tracking-[0.05em] whitespace-nowrap border-b border-border-default text-text-tertiary`}>
                     Emp ID
                   </th>
                   <th className={`${density === 'compact' ? 'py-2' : 'py-4'} px-4 text-[11px] font-bold uppercase tracking-widest border-b border-border-default text-text-tertiary`}>
