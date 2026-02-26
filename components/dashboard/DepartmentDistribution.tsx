@@ -71,10 +71,11 @@ export default function DepartmentDistribution({ data, loading }: DepartmentDist
                         iconType="circle"
                         iconSize={8}
                         wrapperStyle={{
-                            fontSize: '11px',
-                            paddingTop: '25px',
-                            fontWeight: '500',
-                            color: 'var(--text-secondary)'
+                            fontSize: '12px',
+                            paddingTop: '35px',
+                            fontWeight: '600',
+                            color: 'var(--text-secondary)',
+                            letterSpacing: '0.01em'
                         }}
                     />
                 </PieChart>
