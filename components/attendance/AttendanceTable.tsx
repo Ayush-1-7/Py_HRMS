@@ -37,31 +37,31 @@ const STATUS_CONFIG: Record<
   unmarked: {
     label: "UNMARKED",
     badge: "bg-slate-900/50 border-slate-700 text-slate-400 dark:bg-slate-900/80 dark:border-slate-800",
-    text: "text-slate-400",
+    text: "text-slate-500 dark:text-slate-400 font-medium",
     icon: <IoEllipseOutline size={12} />,
   },
   present: {
     label: "PRESENT",
-    badge: "bg-emerald-500/20 border-emerald-500/50 text-emerald-700 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/30",
-    text: "text-emerald-700 dark:text-emerald-400",
+    badge: "bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-400 dark:bg-emerald-500/20 dark:border-emerald-500/40",
+    text: "text-emerald-700 dark:text-emerald-400 font-bold",
     icon: <IoCheckmarkCircle size={12} />,
   },
   absent: {
     label: "ABSENT",
     badge: "bg-rose-500 border-rose-600 text-white shadow-lg shadow-rose-500/20",
-    text: "text-white",
+    text: "text-white font-bold",
     icon: <IoCloseCircle size={12} />,
   },
   leave: {
     label: "LEAVE",
-    badge: "bg-amber-500/20 border-amber-500/50 text-amber-700 dark:text-amber-400 dark:bg-amber-500/10 dark:border-amber-500/30",
-    text: "text-amber-700 dark:text-amber-400",
+    badge: "bg-amber-500/10 border-amber-500/30 text-amber-700 dark:text-amber-400 dark:bg-amber-500/20 dark:border-amber-500/40",
+    text: "text-amber-700 dark:text-amber-400 font-bold",
     icon: <IoCalendarOutline size={12} />,
   },
   holiday: {
     label: "HOLIDAY",
-    badge: "bg-indigo-500/20 border-indigo-500/50 text-indigo-700 dark:text-indigo-400 dark:bg-indigo-500/10 dark:border-indigo-500/30",
-    text: "text-indigo-700 dark:text-indigo-400",
+    badge: "bg-indigo-500/10 border-indigo-500/30 text-indigo-700 dark:text-indigo-400 dark:bg-indigo-500/20 dark:border-indigo-500/40",
+    text: "text-indigo-700 dark:text-indigo-400 font-bold",
     icon: <IoCalendarOutline size={12} />,
   },
 };
@@ -232,14 +232,14 @@ export default function AttendanceTable({ from, to }: AttendanceTableProps) {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="relative max-w-[280px] w-full">
-            <IoSearchOutline size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-tertiary pointer-events-none" />
+          <div className="flex-1 min-w-[200px] relative group">
+            <IoSearchOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-primary transition-colors" size={18} />
             <input
               type="text"
-              placeholder="Filter roster..."
               value={search}
               onChange={(e) => handleSearchChange(e.target.value)}
-              className="w-full pl-10 pr-9 py-2 text-[13px] rounded-xl border bg-surface-base dark:bg-slate-900 border-border-default dark:border-slate-800 focus:border-brand-primary focus:ring-4 focus:ring-brand-subtle outline-none transition-all text-text-primary dark:text-slate-200"
+              placeholder="Search employees..."
+              className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-sm transition-all text-slate-900 dark:text-slate-100 placeholder:text-slate-400"
             />
           </div>
           <button
@@ -256,27 +256,27 @@ export default function AttendanceTable({ from, to }: AttendanceTableProps) {
         <div className="flex-1 overflow-x-auto thin-scrollbar relative">
           <div className="min-w-max w-full">
             {/* Grid Header */}
-            <div className={`${GRID_LAYOUT} border-b border-border-default dark:border-slate-800 bg-surface-base dark:bg-slate-950 sticky top-0 z-30`}>
-              <div className="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-text-tertiary sticky left-0 bg-surface-base dark:bg-slate-950 z-40 border-r border-border-subtle dark:border-slate-800 flex items-center">
-                Employee Details
+            <div className={`${GRID_LAYOUT} border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 sticky top-0 z-30`}>
+              <div className="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-slate-600 dark:text-slate-300 sticky left-0 bg-slate-50 dark:bg-slate-950 z-40 border-r border-slate-200 dark:border-slate-800 flex items-center">
+                Employee Information
               </div>
               {dates.map((d) => {
                 const { num, day } = dayLabel(d);
                 const isTodayDate = isToday(d);
                 return (
-                  <div key={d} className="px-4 py-3 flex flex-col items-center justify-center border-r border-border-subtle dark:border-slate-800/10 last:border-0">
-                    <span className={`text-sm font-black ${isTodayDate ? 'text-brand-primary' : 'text-text-primary dark:text-slate-200'}`}>{num}</span>
-                    <span className={`text-[9px] font-bold uppercase tracking-widest ${isTodayDate ? 'text-brand-primary/70' : 'text-text-tertiary'}`}>{day}</span>
+                  <div key={String(d)} className="px-4 py-3 flex flex-col items-center justify-center border-r border-slate-100 dark:border-slate-800/10 last:border-0 min-w-[120px]">
+                    <span className={`text-sm font-black ${isTodayDate ? 'text-brand-primary' : 'text-slate-900 dark:text-slate-100'}`}>{num}</span>
+                    <span className={`text-[10px] font-bold uppercase tracking-widest ${isTodayDate ? 'text-brand-primary/70' : 'text-slate-400 dark:text-slate-500'}`}>{day}</span>
                   </div>
                 );
               })}
-              <div className="flex items-center justify-center text-[10px] font-bold text-text-tertiary">
+              <div className="flex items-center justify-center text-[10px] font-bold text-slate-400">
                 {/* Actions placeholder */}
               </div>
             </div>
 
             {/* Grid Body */}
-            <div className="divide-y divide-border-default dark:divide-slate-800">
+            <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
               {loading ? (
                 Array.from({ length: 10 }).map((_, i) => (
                   <div key={i} className={`${GRID_LAYOUT} min-h-[72px] animate-pulse`}>
@@ -316,8 +316,8 @@ export default function AttendanceTable({ from, to }: AttendanceTableProps) {
                             {initials}
                           </div>
                           <div className="min-w-0">
-                            <p className="text-[14px] font-bold text-text-primary dark:text-slate-100 truncate leading-tight">{emp.name}</p>
-                            <p className="text-[11px] font-bold text-text-tertiary mt-1 font-mono uppercase tracking-tighter">
+                            <p className="text-[14px] font-bold text-slate-900 dark:text-slate-100 truncate leading-tight">{emp.name}</p>
+                            <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 mt-1 font-mono uppercase tracking-tighter">
                               {emp.employeeId || `#${emp.id}`}
                             </p>
                           </div>
@@ -358,35 +358,27 @@ export default function AttendanceTable({ from, to }: AttendanceTableProps) {
 
       {/* Pagination Footer */}
       {!loading && totalPages > 1 && (
-        <div className="px-6 py-4 border-t border-border-default dark:border-slate-800 bg-surface-base dark:bg-slate-950 flex items-center justify-between z-40">
-          <p className="text-[12px] font-bold text-text-tertiary">
-            Displaying <span className="text-text-secondary dark:text-slate-300">{startItem}—{endItem}</span> of <span className="text-text-secondary dark:text-slate-300">{total}</span> employees
+        <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-between z-40">
+          <p className="text-[12px] font-bold text-slate-500">
+            Displaying <span className="text-slate-900 dark:text-slate-100">{startItem}—{endItem}</span> of <span className="text-slate-900 dark:text-slate-100">{total}</span> employees
           </p>
           <div className="flex items-center gap-2">
             <button
               disabled={page <= 1}
               onClick={() => load(page - 1)}
-              className="p-2 rounded-lg border border-border-default dark:border-slate-800 disabled:opacity-30 bg-surface-base dark:bg-slate-900 hover:bg-surface-hover dark:hover:bg-slate-800 transition-all active:scale-95"
+              className="p-2 rounded-lg border border-slate-200 dark:border-slate-800 disabled:opacity-30 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95"
             >
-              <IoChevronBackOutline size={16} />
+              <IoChevronBackOutline size={18} className="text-slate-600 dark:text-slate-400" />
             </button>
-            <div className="flex items-center gap-1">
-              {Array.from({ length: totalPages }).map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => load(i + 1)}
-                  className={`w-8 h-8 rounded-lg text-[12px] font-bold transition-all ${page === i + 1 ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/20 scale-110' : 'text-text-tertiary hover:bg-surface-hover dark:hover:bg-slate-800'}`}
-                >
-                  {i + 1}
-                </button>
-              ))}
+            <div className="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-900 dark:text-slate-100">
+              {page} / {totalPages}
             </div>
             <button
               disabled={page >= totalPages}
               onClick={() => load(page + 1)}
-              className="p-2 rounded-lg border border-border-default dark:border-slate-800 disabled:opacity-30 bg-surface-base dark:bg-slate-900 hover:bg-surface-hover dark:hover:bg-slate-800 transition-all active:scale-95"
+              className="p-2 rounded-lg border border-slate-200 dark:border-slate-800 disabled:opacity-30 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95"
             >
-              <IoChevronForwardOutline size={16} />
+              <IoChevronForwardOutline size={18} className="text-slate-600 dark:text-slate-400" />
             </button>
           </div>
         </div>

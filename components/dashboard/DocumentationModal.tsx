@@ -24,43 +24,43 @@ export default function DocumentationModal({ open, onClose }: DocumentationModal
                 onClick={onClose}
             />
 
-            <div className="relative w-full max-w-4xl h-[85vh] card-base bg-surface-base border-border-default shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300">
+            <div className="relative w-full max-w-4xl h-[85vh] bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 rounded-[2.5rem]">
                 {/* Header / Toolbar */}
-                <div className="flex items-center justify-between px-6 py-4 border-b border-border-default bg-surface-muted/50 backdrop-blur-sm sticky top-0 z-10">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shadow-inner">
-                            <IoDocumentTextOutline size={22} />
+                <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-2xl bg-brand-primary text-white flex items-center justify-center shadow-lg shadow-brand-primary/20">
+                            <IoDocumentTextOutline size={24} />
                         </div>
                         <div>
-                            <h3 className="text-sm font-bold text-text-primary leading-none">Enterprise_HR_Guidelines_2026.pdf</h3>
-                            <p className="text-[10px] text-text-tertiary mt-1 font-medium uppercase tracking-widest">Confidential • Policy Document</p>
+                            <h3 className="text-[13px] font-black text-slate-900 dark:text-slate-100 leading-none">Enterprise_HR_Guidelines_2026.pdf</h3>
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 font-black uppercase tracking-widest">Confidential • System Policy Document</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <button className="hidden sm:flex p-2 rounded-lg hover:bg-surface-hover text-text-secondary transition-colors" title="Print">
+                        <button className="hidden sm:flex p-2.5 rounded-xl hover:bg-white dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all" title="Print Archive">
                             <IoPrintOutline size={20} />
                         </button>
-                        <button className="hidden sm:flex p-2 rounded-lg hover:bg-surface-hover text-text-secondary transition-colors" title="Download">
+                        <button className="hidden sm:flex p-2.5 rounded-xl hover:bg-white dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all" title="Secure Download">
                             <IoDownloadOutline size={20} />
                         </button>
-                        <button className="hidden sm:flex p-2 rounded-lg hover:bg-surface-hover text-text-secondary transition-colors" title="Share">
+                        <button className="hidden sm:flex p-2.5 rounded-xl hover:bg-white dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all" title="External Share">
                             <IoShareOutline size={20} />
                         </button>
-                        <div className="w-px h-6 bg-border-default mx-1 hidden sm:block" />
+                        <div className="w-px h-8 bg-slate-200 dark:bg-slate-800 mx-2 hidden sm:block" />
                         <button
                             onClick={onClose}
-                            className="p-2 rounded-lg hover:bg-danger-subtle hover:text-danger text-text-tertiary transition-all"
+                            className="p-2.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-500/10 hover:text-rose-600 text-slate-400 dark:text-slate-500 transition-all border border-transparent hover:border-rose-200 dark:hover:border-rose-800/30"
                         >
-                            <IoCloseOutline size={24} />
+                            <IoCloseOutline size={26} />
                         </button>
                     </div>
                 </div>
 
                 {/* Scrollable Content (The "PDF" Area) */}
-                <div className="flex-1 overflow-y-auto bg-surface-muted/30 p-4 md:p-12 space-y-8 thin-scrollbar">
+                <div className="flex-1 overflow-y-auto bg-slate-100 dark:bg-slate-900/50 p-4 md:p-12 space-y-8 thin-scrollbar">
                     {/* Page 1 */}
-                    <div className="max-w-[800px] mx-auto bg-white dark:bg-slate-50 shadow-xl border border-black/5 min-h-[1000px] p-12 md:p-20 text-slate-800 flex flex-col items-center">
+                    <div className="max-w-[800px] mx-auto bg-white shadow-2xl border border-black/5 min-h-[1000px] p-12 md:p-20 text-slate-800 flex flex-col items-center rounded-sm">
                         {/* Logo Placeholder */}
                         <div className="w-16 h-16 rounded-2xl bg-brand-primary flex items-center justify-center text-white mb-10 shadow-lg">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 2L2 9L16 16L30 9L16 2Z" fill="currentColor" fillOpacity="0.8" /><path d="M2 23L16 30L30 23V9L16 16L2 9V23Z" fill="currentColor" fillOpacity="0.4" /></svg>
@@ -93,14 +93,6 @@ export default function DocumentationModal({ open, onClose }: DocumentationModal
                                 <p className="text-[15px] leading-relaxed text-slate-600">
                                     The 2026 fiscal year introduces automated tax calculation based on dynamic bracket shifting. Our system ensures consistent 99.9% accuracy by integrating local tax laws via our backend services. Managers must review tax percentages in the dashboard settings monthly.
                                 </p>
-
-                                <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                                    <span className="w-6 h-6 rounded bg-slate-100 flex items-center justify-center text-xs text-slate-500">03</span>
-                                    Workforce Engagement & Attendance
-                                </h3>
-                                <p className="text-[15px] leading-relaxed text-slate-600">
-                                    Attendance metrics are now evaluated using a 7-day rolling window. Present/Absent trends (visualized in the Attendance Pulse) determine performance scoring. Unmarked records will trigger automated email alerts to department leads via the internal notification system.
-                                </p>
                             </section>
 
                             {/* Table Mockup */}
@@ -125,20 +117,20 @@ export default function DocumentationModal({ open, onClose }: DocumentationModal
                             </div>
                         </div>
 
-                        <div className="mt-auto pt-20 text-[9px] font-bold uppercase tracking-[0.4em] text-slate-300">
+                        <div className="mt-auto pt-20 text-[9px] font-black uppercase tracking-[0.4em] text-slate-300">
                             ElevateHR Confidential - Do Not Distribute
                         </div>
                     </div>
                 </div>
 
                 {/* Footer Area */}
-                <div className="px-6 py-4 border-t border-border-default bg-surface-base flex items-center justify-between">
-                    <p className="text-[10px] font-medium text-text-tertiary uppercase tracking-widest">Page 1 of 1</p>
+                <div className="px-8 py-5 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 flex items-center justify-between">
+                    <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em]">Manifest v4.2 • Page 01 / 01</p>
                     <button
                         onClick={onClose}
-                        className="px-6 py-2 bg-brand-primary text-white rounded-full text-xs font-bold shadow-lg shadow-brand-primary/20 hover:scale-[1.03] active:scale-[0.98] transition-all"
+                        className="px-8 py-3 bg-brand-primary text-white rounded-xl text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-primary/20 hover:scale-[1.03] active:scale-[0.98] transition-all"
                     >
-                        Close Preview
+                        Dismiss Review
                     </button>
                 </div>
             </div>

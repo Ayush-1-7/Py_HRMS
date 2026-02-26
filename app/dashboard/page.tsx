@@ -133,23 +133,23 @@ export default function DashboardPage() {
     <div className="space-y-8 pb-12">
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 animate-fade-in-up stagger-1">
         <div className="space-y-1">
-          <h1 className="text-3xl lg:text-4xl font-bold tracking-tight text-text-primary">
-            Executive <span className="text-brand-primary">Dashboard</span>
+          <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-slate-100 italic">
+            Executive <span className="text-brand-primary">Pulse</span>
           </h1>
-          <p className="text-sm md:text-base text-text-secondary">
-            Strategic workforce insights and operational overview.
+          <p className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+            Strategic workforce intelligence & operational analytics.
           </p>
         </div>
-        <div className="flex gap-3">
-          <div className="flex -space-x-2">
+        <div className="flex gap-4 items-center">
+          <div className="flex -space-x-3">
             {[1, 2, 3].map(i => (
-              <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-surface-muted flex items-center justify-center text-[10px] font-bold text-text-tertiary">
+              <div key={i} className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-950 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-[11px] font-black text-slate-500 dark:text-slate-400 ring-1 ring-slate-200 dark:ring-slate-700 shadow-sm">
                 {String.fromCharCode(64 + i)}
               </div>
             ))}
           </div>
-          <p className="text-xs text-text-tertiary self-center ml-2 border-l border-border-default pl-3">
-            3 active HR Managers
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 border-l border-slate-200 dark:border-slate-800 pl-4 py-1">
+            03 Active Admins
           </p>
         </div>
       </header>
@@ -164,24 +164,24 @@ export default function DashboardPage() {
         />
       </section>
 
-      {/* ── Executive Overivew Zone ── */}
+      {/* ── Executive Metrics Cluster ── */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in-up stagger-2">
         {executiveMetrics.map((metric, idx) => (
-          <div key={idx} className="card-base p-5 group hover:border-brand-primary transition-all duration-300">
-            <div className="flex justify-between items-center mb-4">
-              <div className={`p-2 rounded-lg ${metric.bgClass} text-white`}>
+          <div key={idx} className="bg-white dark:bg-slate-900/50 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 hover:border-brand-primary transition-all duration-300 shadow-sm group">
+            <div className="flex justify-between items-center mb-6">
+              <div className={`w-12 h-12 rounded-2xl ${metric.bgClass} text-white flex items-center justify-center shadow-lg shadow-brand-primary/20`}>
                 {metric.icon}
               </div>
-              <div className="flex items-center gap-2">
-                <span className={`text-[11px] font-bold px-1.5 py-0.5 rounded ${metric.trend.startsWith('+') ? 'bg-success-subtle text-success' : metric.trend === 'Stable' ? 'bg-surface-muted text-text-tertiary' : 'bg-danger-subtle text-danger'}`}>
+              <div className="flex items-center gap-3">
+                <span className={`text-[11px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full ${metric.trend.startsWith('+') ? 'bg-emerald-500/10 text-emerald-600' : metric.trend === 'Stable' ? 'bg-slate-100 dark:bg-slate-800 text-slate-500' : 'bg-rose-500/10 text-rose-600'}`}>
                   {metric.trend}
                 </span>
-                <Sparkline data={metric.sparkline} color={metric.trend.startsWith('+') ? 'var(--success-primary)' : 'var(--text-tertiary)'} />
+                <Sparkline data={metric.sparkline} color={metric.trend.startsWith('+') ? 'var(--success-primary)' : 'var(--slate-400)'} />
               </div>
             </div>
             <div className="space-y-1">
-              <h3 className="text-2xl font-bold text-text-primary">{loading ? <Skeleton className="h-8 w-16" /> : metric.value}</h3>
-              <p className="text-xs font-medium text-text-tertiary uppercase tracking-wider">{metric.label}</p>
+              <h3 className="text-2xl font-black text-slate-900 dark:text-slate-100">{loading ? <Skeleton className="h-8 w-20 bg-slate-100 dark:bg-slate-800" /> : metric.value}</h3>
+              <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em]">{metric.label}</p>
             </div>
           </div>
         ))}
@@ -189,17 +189,17 @@ export default function DashboardPage() {
 
       {/* ── Strategic Analytics Zone ── */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in-up stagger-3">
-        <div className="card-base p-6 space-y-6">
+        <div className="bg-white dark:bg-slate-950 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-text-primary">Attendance Pulse</h2>
-            <p className="text-[10px] font-bold text-text-tertiary uppercase tracking-widest bg-surface-muted px-2 py-1 rounded">Last 7 Days</p>
+            <h2 className="text-lg font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight italic">Attendance Pulse</h2>
+            <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-full border border-slate-100 dark:border-slate-800">Operational Window: 07 Days</p>
           </div>
           <AttendanceTrend data={attendanceTrend} loading={loading} />
         </div>
-        <div className="card-base p-6 space-y-6">
+        <div className="bg-white dark:bg-slate-950 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-text-primary">Workforce Distribution</h2>
-            <p className="text-[10px] font-bold text-text-tertiary uppercase tracking-widest bg-surface-muted px-2 py-1 rounded">By Department</p>
+            <h2 className="text-lg font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight italic">Workforce Topology</h2>
+            <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-full border border-slate-100 dark:border-slate-800">By Functional Division</p>
           </div>
           <DepartmentDistribution data={deptDistribution} loading={loading} />
         </div>
@@ -208,60 +208,62 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-fade-in-up stagger-4">
         {/* ── Operational Alerts Zone ── */}
         <div className="lg:col-span-8 space-y-8">
-          <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-text-primary flex items-center gap-2">
+          <section className="space-y-5">
+            <div className="flex items-center justify-between px-2">
+              <h2 className="text-lg font-black text-slate-900 dark:text-slate-100 flex items-center gap-3">
                 Operational Alerts
-                <span className="px-2 py-0.5 rounded-full bg-danger-subtle text-danger text-[10px] uppercase font-black">Urgent</span>
+                <span className="px-3 py-1 rounded-full bg-rose-500 text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-rose-500/20">Action Required</span>
               </h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="card-base p-4 flex items-center gap-4 bg-danger-subtle/30 border-danger/20">
-                <div className="w-10 h-10 rounded-xl bg-danger text-white flex items-center justify-center">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0" /><line x1="12" y1="2" x2="12" y2="12" /></svg>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="bg-white dark:bg-slate-950 p-6 rounded-3xl border border-rose-200 dark:border-rose-900/30 flex items-center gap-5 shadow-sm hover:shadow-md transition-shadow">
+                <div className="w-14 h-14 rounded-2xl bg-rose-500 text-white flex items-center justify-center shadow-lg shadow-rose-500/20">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0" /><line x1="12" y1="2" x2="12" y2="12" /></svg>
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-text-primary">{stats.absentToday} Employees Absent</p>
-                  <p className="text-xs text-text-secondary">Requires backfill planning</p>
+                  <p className="text-sm font-black text-slate-900 dark:text-slate-100">{stats.absentToday} Employees Absent</p>
+                  <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mt-1">Resource planning needed</p>
                 </div>
               </div>
-              <div className="card-base p-4 flex items-center gap-4 bg-warning-subtle/30 border-warning/20">
-                <div className="w-10 h-10 rounded-xl bg-warning-primary text-white flex items-center justify-center">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
+              <div className="bg-white dark:bg-slate-950 p-6 rounded-3xl border border-amber-200 dark:border-amber-900/30 flex items-center gap-5 shadow-sm hover:shadow-md transition-shadow">
+                <div className="w-14 h-14 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-lg shadow-amber-500/20">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-text-primary">{stats.missingAttendance} Unmarked Attendance</p>
-                  <p className="text-xs text-text-secondary">Check with department heads</p>
+                  <p className="text-sm font-black text-slate-900 dark:text-slate-100">{stats.missingAttendance} Unmarked Slots</p>
+                  <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mt-1">Compliance sync required</p>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* ── Recent Activity / New Joins ── */}
-          <section className="space-y-4">
-            <h2 className="text-lg font-bold text-text-primary">Recently Joined</h2>
-            <div className="card-base overflow-hidden">
-              <div className="divide-y divide-border-default">
-                {loading ? [1, 2, 3].map(i => <div key={i} className="p-4"><Skeleton className="h-10 w-full" /></div>) :
+          {/* ── Personnel Snapshot / New Joins ── */}
+          <section className="space-y-5">
+            <h2 className="text-lg font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight italic">Personnel Log</h2>
+            <div className="bg-white dark:bg-slate-950 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+              <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                {loading ? [1, 2, 3].map(i => <div key={i} className="p-5"><Skeleton className="h-12 w-full bg-slate-50 dark:bg-slate-900" /></div>) :
                   recentEmployees.length > 0 ? recentEmployees.map((emp, idx) => (
-                    <div key={idx} className="p-4 flex items-center justify-between hover:bg-surface-hover transition-colors">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-brand-subtle flex items-center justify-center text-brand-primary font-bold text-xs">
+                    <div key={idx} className="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors group">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-2xl bg-brand-subtle flex items-center justify-center text-brand-primary font-black text-sm ring-1 ring-brand-muted group-hover:scale-110 transition-transform">
                           {emp.name.split(' ').map(n => n[0]).join('')}
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-text-primary">{emp.name}</p>
-                          <p className="text-[10px] font-mono text-text-tertiary mb-0.5">{emp.employeeId || `#${emp.id}`}</p>
-                          <p className="text-[11px] text-text-tertiary">{emp.designation} • {emp.department}</p>
+                          <p className="text-sm font-black text-slate-900 dark:text-slate-100">{emp.name}</p>
+                          <p className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-widest">{emp.employeeId || `#${emp.id}`} • {emp.department}</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-[10px] font-bold text-text-tertiary uppercase tracking-tighter">Joined</p>
-                        <p className="text-xs font-medium text-text-secondary">{new Date(emp.joiningDate).toLocaleDateString()}</p>
+                        <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Entry Date</p>
+                        <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-1">{new Date(emp.joiningDate).toLocaleDateString(undefined, { dateStyle: 'medium' })}</p>
                       </div>
                     </div>
-                  )) : <div className="p-8 text-center text-text-tertiary text-sm italic">No recent joiners found.</div>
+                  )) : <div className="p-12 text-center text-slate-400 text-sm italic font-bold">No recent joiners identified.</div>
                 }
+              </div>
+              <div className="p-5 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800 text-center">
+                <Link href="/personnel" className="text-[11px] font-black uppercase tracking-widest text-brand-primary hover:underline underline-offset-4">Browse Directory →</Link>
               </div>
             </div>
           </section>
@@ -269,45 +271,47 @@ export default function DashboardPage() {
 
         {/* ── Quick Actions & Sidebar Zone ── */}
         <div className="lg:col-span-4 space-y-8">
-          <section className="space-y-4">
-            <h2 className="text-lg font-bold text-text-primary">Quick Actions</h2>
-            <div className="card-base p-2 space-y-1">
-              <Link href="/personnel?add=true" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-muted text-text-primary transition-colors">
-                <div className="w-8 h-8 rounded-lg bg-brand-subtle text-brand-primary flex items-center justify-center">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+          <section className="space-y-5">
+            <h2 className="text-lg font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight italic">Quick Actions</h2>
+            <div className="bg-white dark:bg-slate-950 p-2 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <Link href="/personnel?add=true" className="w-full flex items-center justify-between px-4 py-4 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-900 dark:text-slate-100 transition-all group">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-brand-subtle text-brand-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                  </div>
+                  <span className="text-[13px] font-bold">Add New Personnel</span>
                 </div>
-                <span className="text-sm font-semibold">Add Employee</span>
+                <span className="text-[10px] font-black text-slate-300 group-hover:text-brand-primary transition-colors">ALT-N</span>
               </Link>
-              <Link href="/attendance" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-muted text-text-primary transition-colors">
-                <div className="w-8 h-8 rounded-lg bg-success-subtle text-success flex items-center justify-center">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+              <Link href="/attendance" className="w-full flex items-center justify-between px-4 py-4 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-900 dark:text-slate-100 transition-all group">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+                  </div>
+                  <span className="text-[13px] font-bold">Audit Attendance</span>
                 </div>
-                <span className="text-sm font-semibold">Verify Compliance</span>
-              </Link>
-              <Link href="/reports" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-muted text-text-primary transition-colors">
-                <div className="w-8 h-8 rounded-lg bg-accent-subtle text-accent-primary flex items-center justify-center">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
-                </div>
-                <span className="text-sm font-semibold">Generate Reports</span>
+                <span className="text-[10px] font-black text-slate-300 group-hover:text-emerald-500 transition-colors">ALT-A</span>
               </Link>
             </div>
           </section>
 
-          <section className="card-base p-6 bg-brand-primary text-white border-none shadow-xl relative overflow-hidden">
-            <div className="relative z-10 space-y-4">
-              <h3 className="font-bold text-lg">Knowledge Hub</h3>
-              <p className="text-xs text-white/80 leading-relaxed">
-                Review our latest enterprise HR guidelines for 2026. Includes updated compliance and tax templates.
+          <section className="p-8 bg-brand-primary text-white rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+            <div className="relative z-10 space-y-5">
+              <h3 className="font-black text-xl uppercase tracking-tighter italic">Operational Hub</h3>
+              <p className="text-[13px] text-white/90 font-bold leading-relaxed">
+                Review mandated enterprise HR directives for 2026. Includes updated compliance protocols and tax templates.
               </p>
               <button
                 onClick={() => setDocModalOpen(true)}
-                className="group flex items-center gap-2 px-5 py-2.5 bg-white text-slate-950 rounded-xl text-[13px] font-bold shadow-lg shadow-black/10 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] transition-all ring-1 ring-white/50"
+                className="group flex items-center gap-3 px-6 py-4 bg-white text-slate-950 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-xl hover:shadow-2xl hover:scale-[1.03] active:scale-[0.98] transition-all ring-4 ring-white/20"
               >
-                <IoDocumentTextOutline size={18} className="group-hover:rotate-6 transition-transform opacity-70" />
-                Read Documentation
+                <IoDocumentTextOutline size={20} className="group-hover:rotate-6 transition-transform text-brand-primary" />
+                Access Directives
               </button>
             </div>
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
+            {/* Decorative Graphics */}
+            <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-500" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-hover/20 rounded-full blur-2xl" />
           </section>
         </div>
       </div>

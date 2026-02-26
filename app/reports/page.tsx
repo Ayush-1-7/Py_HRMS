@@ -107,52 +107,62 @@ export default function ReportsPage() {
     };
 
     return (
-        <div className="p-4 md:p-8 space-y-8 animate-in fade-in duration-500">
-            <header className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="p-6 md:p-10 space-y-10 animate-fade-in bg-white dark:bg-slate-950 min-h-screen">
+            <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-text-primary flex items-center gap-3">
-                        <IoAnalyticsOutline className="text-brand-primary" />
-                        Executive Reports
+                    <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-4 italic">
+                        <div className="w-12 h-12 rounded-2xl bg-brand-primary text-white flex items-center justify-center shadow-lg shadow-brand-primary/20">
+                            <IoAnalyticsOutline size={28} />
+                        </div>
+                        Executive <span className="text-brand-primary">Intelligence</span>
                     </h1>
-                    <p className="text-text-secondary mt-1">Strategic workforce analytics and documentation.</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 mt-2 ml-16">
+                        Strategic Analytics • Workforce Documentation • Node Insights
+                    </p>
                 </div>
                 <button
                     onClick={exportWorkforceReport}
                     disabled={loading}
-                    className="btn-primary rounded-xl px-6 py-2.5 flex items-center gap-2 shadow-sm hover:shadow-lg transition-all active:scale-95 disabled:opacity-50"
+                    className="flex items-center gap-3 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl text-[11px] font-black uppercase tracking-widest hover:scale-[1.03] active:scale-[0.98] transition-all shadow-xl shadow-slate-900/10 dark:shadow-white/5 border border-slate-800 dark:border-slate-200 disabled:opacity-50"
                 >
                     <IoDownloadOutline size={18} />
-                    Export All Records
+                    Export Repository Records
                 </button>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="card-base p-6 space-y-6">
-                    <div className="flex items-center gap-2 mb-2">
-                        <IoBarChartOutline className="text-brand-primary" />
-                        <h2 className="text-lg font-bold text-text-primary">Engagement Trends</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in-up stagger-1">
+                <div className="bg-white dark:bg-slate-950 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+                    <div className="flex items-center gap-3 mb-2 px-2">
+                        <div className="w-8 h-8 rounded-xl bg-brand-subtle text-brand-primary flex items-center justify-center">
+                            <IoBarChartOutline size={18} />
+                        </div>
+                        <h2 className="text-lg font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight italic">Engagement Vectors</h2>
                     </div>
                     <AttendanceTrend data={data.attendance} loading={loading} />
                 </div>
-                <div className="card-base p-6 space-y-6">
-                    <div className="flex items-center gap-2 mb-2">
-                        <IoDocumentTextOutline className="text-brand-primary" />
-                        <h2 className="text-lg font-bold text-text-primary">Force Distribution</h2>
+                <div className="bg-white dark:bg-slate-950 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+                    <div className="flex items-center gap-3 mb-2 px-2">
+                        <div className="w-8 h-8 rounded-xl bg-brand-subtle text-brand-primary flex items-center justify-center">
+                            <IoDocumentTextOutline size={18} />
+                        </div>
+                        <h2 className="text-lg font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight italic">Workforce Topology</h2>
                     </div>
                     <DepartmentDistribution data={data.departments} loading={loading} />
                 </div>
             </div>
 
-            <section className="card-base p-8 bg-surface-muted/50 border-dashed border-2 flex flex-col items-center justify-center text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-brand-subtle text-brand-primary flex items-center justify-center">
-                    <IoDocumentTextOutline size={32} />
+            <section className="bg-slate-50 dark:bg-slate-900/50 p-12 rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center text-center space-y-6 animate-fade-in-up stagger-2">
+                <div className="w-20 h-20 rounded-[2rem] bg-brand-primary text-white flex items-center justify-center shadow-2xl shadow-brand-primary/20 rotate-3 hover:rotate-0 transition-transform duration-500">
+                    <IoDocumentTextOutline size={40} />
                 </div>
-                <div className="max-w-md">
-                    <h3 className="text-lg font-bold text-text-primary">Custom Report Builder</h3>
-                    <p className="text-sm text-text-tertiary">Need more specific data? Our advanced query engine allows you to build custom cross-functional reports.</p>
+                <div className="max-w-xl space-y-3">
+                    <h3 className="text-2xl font-black text-slate-900 dark:text-slate-100 uppercase italic">Enterprise Query Designer</h3>
+                    <p className="text-sm font-bold text-slate-500 dark:text-slate-400 leading-relaxed uppercase tracking-tight">
+                        Orchestrate multi-dimensional reports with our advanced heuristic query engine. Build cross-functional data nodes for deep operational insight.
+                    </p>
                 </div>
-                <button className="btn-secondary px-6 py-2 rounded-lg text-sm font-bold border-border-default">
-                    Launch Report Designer
+                <button className="px-8 py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-md active:scale-[0.98]">
+                    Launch Component Builder
                 </button>
             </section>
         </div>

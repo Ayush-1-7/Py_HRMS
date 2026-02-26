@@ -183,15 +183,15 @@ export default function EmployeeList() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
         <div>
-          <h2 className="text-xl font-semibold tracking-tight text-text-primary">
-            Workforce Overview
+          <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 italic">
+            Workforce Register
           </h2>
           {!loading ? (
-            <p className="text-sm mt-1 text-text-secondary">
-              {total} active record{total !== 1 ? "s" : ""}
+            <p className="text-[12px] font-bold mt-1 text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+              {total} active record{total !== 1 ? "s" : ""} identified
             </p>
           ) : (
-            <Skeleton className="w-24 h-5 mt-1" />
+            <Skeleton className="w-24 h-4 mt-1 bg-slate-100 dark:bg-slate-800" />
           )}
         </div>
 
@@ -209,7 +209,7 @@ export default function EmployeeList() {
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => load(page)}
-              className="rounded-full p-2.5 transition-all outline-none hover:bg-surface-hover focus-visible:ring-2 ring-brand-primary focus-visible:bg-surface-hover text-text-secondary hover:text-text-primary bg-surface-base border border-border-default/50"
+              className="rounded-xl p-2.5 transition-all outline-none hover:bg-slate-100 dark:hover:bg-slate-800 focus:ring-2 ring-brand-primary text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm shadow-slate-200/50"
               title="Refresh directory"
             >
               <IoRefreshOutline size={20} className={loading ? "animate-spin" : ""} />
@@ -229,32 +229,32 @@ export default function EmployeeList() {
 
       <div className="flex flex-wrap items-center justify-between mb-4 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 p-1 bg-surface-muted rounded-xl border border-border-default">
+          <div className="flex items-center gap-2 p-1 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <button
               onClick={() => setDensity("comfortable")}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${density === 'comfortable' ? 'bg-surface-base text-brand-primary shadow-sm' : 'text-text-tertiary hover:text-text-secondary'}`}
+              className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${density === 'comfortable' ? 'bg-white dark:bg-slate-800 text-brand-primary shadow-sm ring-1 ring-slate-100 dark:ring-slate-700' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'}`}
             >
               Comfortable
             </button>
             <button
               onClick={() => setDensity("compact")}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${density === 'compact' ? 'bg-surface-base text-brand-primary shadow-sm' : 'text-text-tertiary hover:text-text-secondary'}`}
+              className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${density === 'compact' ? 'bg-white dark:bg-slate-800 text-brand-primary shadow-sm ring-1 ring-slate-100 dark:ring-slate-700' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'}`}
             >
               Compact
             </button>
           </div>
 
-          <div className="flex items-center gap-2 p-1 bg-surface-muted rounded-xl border border-border-default">
+          <div className="flex items-center gap-2 p-1 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <button
               onClick={() => setViewMode("list")}
-              className={`p-1.5 rounded-lg transition-all ${viewMode === 'list' ? 'bg-surface-base text-brand-primary shadow-sm' : 'text-text-tertiary hover:text-text-secondary'}`}
+              className={`p-1.5 rounded-lg transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-800 text-brand-primary shadow-sm ring-1 ring-slate-100 dark:ring-slate-700' : 'text-slate-500 dark:text-slate-400'}`}
               title="List View"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
             </button>
             <button
               onClick={() => setViewMode("grid")}
-              className={`p-1.5 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-surface-base text-brand-primary shadow-sm' : 'text-text-tertiary hover:text-text-secondary'}`}
+              className={`p-1.5 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-white dark:bg-slate-800 text-brand-primary shadow-sm ring-1 ring-slate-100 dark:ring-slate-700' : 'text-slate-500 dark:text-slate-400'}`}
               title="Grid View"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
@@ -263,10 +263,10 @@ export default function EmployeeList() {
         </div>
 
         <div className="flex items-center gap-3">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-text-tertiary">Visible Columns:</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Layout Overlays:</p>
           <div className="flex gap-2">
             {[
-              { id: "dept", label: "Dept" },
+              { id: "dept", label: "Department" },
               { id: "designation", label: "Designation" },
             ].map(col => (
               <button
@@ -276,7 +276,7 @@ export default function EmployeeList() {
                   if (next.has(col.id)) next.delete(col.id); else next.add(col.id);
                   return next;
                 })}
-                className={`px-2.5 py-1 text-[10px] font-bold rounded-full border transition-all ${visibleColumns.has(col.id) ? 'bg-brand-subtle text-brand-primary border-brand-muted' : 'bg-surface-base text-text-tertiary border-border-default'}`}
+                className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full border transition-all ${visibleColumns.has(col.id) ? 'bg-brand-subtle text-brand-primary border-brand-muted shadow-sm' : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300'}`}
               >
                 {col.label}
               </button>
@@ -289,19 +289,19 @@ export default function EmployeeList() {
         <div className="relative flex-1 w-full max-w-md group">
           <IoSearchOutline
             size={18}
-            className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors group-focus-within:text-brand-primary text-text-tertiary"
+            className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors group-focus-within:text-brand-primary text-slate-400"
           />
           <input
             type="text"
-            placeholder="Search by name, department, ID…"
+            placeholder="Identify personnel via ID, name, or role…"
             value={search}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className="w-full pl-11 pr-10 py-2.5 text-sm rounded-full border bg-surface-base outline-none transition-all focus:border-brand-primary focus:ring-4 focus:ring-brand-subtle border-border-default text-text-primary placeholder:text-text-tertiary"
+            className="w-full pl-11 pr-10 py-3 text-[13px] font-bold rounded-xl border bg-white dark:bg-slate-900 outline-none transition-all focus:border-brand-primary focus:ring-4 focus:ring-brand-subtle border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 shadow-sm"
           />
           {search && (
             <button
               onClick={() => { setSearch(""); searchRef.current = ""; load(1); }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-surface-hover transition-colors text-text-tertiary hover:text-text-primary"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
             >
               <IoCloseOutline size={16} />
             </button>
@@ -345,9 +345,9 @@ export default function EmployeeList() {
           )}
           <button
             onClick={() => { setSearch(""); searchRef.current = ""; setKeyword(""); keywordRef.current = ""; load(1); }}
-            className="text-[10px] font-bold text-text-tertiary hover:text-danger underline decoration-dotted underline-offset-4 transition-colors"
+            className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:text-danger underline decoration-dotted underline-offset-4 transition-colors"
           >
-            Clear All
+            Reset Filters
           </button>
         </div>
       )}
@@ -425,15 +425,15 @@ export default function EmployeeList() {
         <div className="hidden lg:flex flex-1 flex-col rounded-[2rem] border shadow-sm overflow-hidden bg-surface-base/40 backdrop-blur-md border-border-default/50 min-h-0">
           <div className="flex-1 overflow-y-auto thin-scrollbar">
             <table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 z-10">
-                <tr className="bg-surface-muted border-b border-border-default">
-                  <th className="py-4 pl-6 pr-2 w-12 border-b border-border-default"><input type="checkbox" checked={selected.size === employees.length} onChange={toggleAll} className="w-4 h-4" /></th>
-                  <th className="px-5 text-[12px] font-bold uppercase tracking-[0.05em] whitespace-nowrap border-b border-border-default text-text-tertiary">Emp ID</th>
-                  <th className="px-4 text-[11px] font-bold uppercase tracking-widest border-b border-border-default text-text-tertiary">Employee</th>
-                  {visibleColumns.has("dept") && <th className="px-4 text-[11px] font-bold uppercase tracking-widest border-b border-border-default text-text-tertiary text-center">Department</th>}
-                  {visibleColumns.has("designation") && <th className="px-4 text-[11px] font-bold uppercase tracking-widest border-b border-border-default text-text-tertiary">Designation</th>}
-                  <th className="px-4 text-[11px] font-bold uppercase tracking-widest border-b border-border-default text-text-tertiary text-center">Status</th>
-                  <th className="px-4 text-[11px] font-bold uppercase tracking-widest border-b border-border-default text-right text-text-tertiary">Actions</th>
+              <thead>
+                <tr className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+                  <th className="py-4 pl-6 pr-2 w-12"><input type="checkbox" checked={selected.size === employees.length} onChange={toggleAll} className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-brand-primary focus:ring-brand-subtle" /></th>
+                  <th className="px-5 text-[11px] font-black uppercase tracking-widest whitespace-nowrap text-slate-500 dark:text-slate-400">System ID</th>
+                  <th className="px-4 text-[11px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Personnel</th>
+                  {visibleColumns.has("dept") && <th className="px-4 text-[11px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 text-center">Division</th>}
+                  {visibleColumns.has("designation") && <th className="px-4 text-[11px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Designation</th>}
+                  <th className="px-4 text-[11px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 text-center">Status</th>
+                  <th className="px-4 text-[11px] font-black uppercase tracking-widest text-right text-slate-500 dark:text-slate-400">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border-default">
@@ -444,12 +444,14 @@ export default function EmployeeList() {
             </table>
           </div>
           {!loading && totalPages > 1 && (
-            <div className="flex items-center justify-between px-6 py-4 border-t border-border-default bg-surface-muted">
-              <p className="text-sm text-text-secondary">Showing {startItem} to {endItem} of {total}</p>
-              <div className="flex items-center gap-1 bg-surface-base border border-border-default p-1 rounded-xl shadow-sm">
-                <button disabled={page <= 1} onClick={() => goToPage(page - 1)} className="p-1.5 rounded-lg disabled:opacity-30"><IoChevronBackOutline size={16} /></button>
-                <span className="px-3 text-xs font-bold text-brand-primary">{page} / {totalPages}</span>
-                <button disabled={page >= totalPages} onClick={() => goToPage(page + 1)} className="p-1.5 rounded-lg disabled:opacity-30"><IoChevronForwardOutline size={16} /></button>
+            <div className="flex items-center justify-between px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+              <p className="text-[12px] font-bold text-slate-500">Showing <span className="text-slate-900 dark:text-slate-100">{startItem}—{endItem}</span> of <span className="text-slate-900 dark:text-slate-100">{total}</span></p>
+              <div className="flex items-center gap-2">
+                <button disabled={page <= 1} onClick={() => goToPage(page - 1)} className="p-2 rounded-lg border border-slate-200 dark:border-slate-800 disabled:opacity-30 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95"><IoChevronBackOutline size={18} className="text-slate-600 dark:text-slate-400" /></button>
+                <div className="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-900 dark:text-slate-100">
+                  {page} / {totalPages}
+                </div>
+                <button disabled={page >= totalPages} onClick={() => goToPage(page + 1)} className="p-2 rounded-lg border border-slate-200 dark:border-slate-800 disabled:opacity-30 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95"><IoChevronForwardOutline size={18} className="text-slate-600 dark:text-slate-400" /></button>
               </div>
             </div>
           )}

@@ -96,68 +96,78 @@ export default function CommandSearch() {
       className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh] bg-black/40 dark:bg-black/60 backdrop-blur-sm px-4"
     >
       <div
-        className="card-base w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border"
+        className="w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 animate-in zoom-in-95 duration-200"
       >
         {/* Search input */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-border-default">
-          <IoSearchOutline size={18} className="shrink-0 text-text-tertiary" />
+        <div className="flex items-center gap-3 px-5 py-5 border-b border-slate-100 dark:border-slate-800/50 bg-slate-50/50 dark:bg-slate-900/50">
+          <IoSearchOutline size={18} className="shrink-0 text-slate-400 dark:text-slate-500" />
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search pages…"
+            placeholder="Search system entities and navigation…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent outline-none text-sm text-text-primary placeholder:text-text-tertiary"
+            className="flex-1 bg-transparent outline-none text-[13px] font-bold text-slate-900 dark:text-slate-100 placeholder:text-slate-400"
           />
           <kbd
-            className="text-[10px] px-1.5 py-0.5 rounded font-mono shrink-0 bg-surface-muted border border-border-default text-text-secondary"
+            className="text-[10px] font-black px-2 py-1 rounded-md shrink-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 shadow-sm"
           >
             ESC
           </kbd>
         </div>
 
         {/* Results */}
-        <div className="max-h-64 overflow-y-auto py-2">
+        <div className="max-h-[400px] overflow-y-auto py-3 thin-scrollbar">
           {filtered.length === 0 ? (
-            <p className="px-5 py-6 text-sm text-center text-text-secondary">
-              No results found
-            </p>
+            <div className="px-5 py-10 text-center">
+              <p className="text-sm font-bold text-slate-400 dark:text-slate-600">
+                No matching results located
+              </p>
+            </div>
           ) : (
             <>
-              <p className="px-5 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-text-tertiary">
-                Navigation
+              <p className="px-5 py-2 text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500">
+                Navigation Cluster
               </p>
-              {filtered.map((item, i) => (
-                <button
-                  key={item.href}
-                  onClick={() => navigate(item.href)}
-                  onMouseEnter={() => setActiveIndex(i)}
-                  className={`w-full flex items-center justify-between px-5 py-2.5 text-sm transition-colors ${i === activeIndex ? 'bg-surface-hover text-brand-primary font-semibold' : 'bg-transparent text-text-secondary font-normal'}`}
-                >
-                  <span>{item.label}</span>
-                  {i === activeIndex && (
-                    <IoReturnDownBackOutline size={14} className="text-brand-primary" />
-                  )}
-                </button>
-              ))}
+              <div className="px-2 space-y-1 mt-1">
+                {filtered.map((item, i) => (
+                  <button
+                    key={item.href}
+                    onClick={() => navigate(item.href)}
+                    onMouseEnter={() => setActiveIndex(i)}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-[13px] transition-all ${i === activeIndex ? 'bg-slate-100 dark:bg-slate-800 text-brand-primary font-bold shadow-sm ring-1 ring-slate-200/50 dark:ring-slate-700/50' : 'bg-transparent text-slate-600 dark:text-slate-400 font-bold'}`}
+                  >
+                    <span className="flex items-center gap-3">
+                      <span className={`w-1.5 h-1.5 rounded-full transition-colors ${i === activeIndex ? 'bg-brand-primary' : 'bg-slate-300 dark:bg-slate-700'}`} />
+                      {item.label}
+                    </span>
+                    {i === activeIndex && (
+                      <div className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-brand-primary">
+                        Navigate
+                        <IoReturnDownBackOutline size={14} />
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
             </>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center gap-4 px-5 py-2.5 border-t border-border-default text-[10px] text-text-tertiary">
-          <span className="flex items-center gap-1">
-            <kbd className="px-1 py-0.5 rounded font-mono bg-surface-muted border border-border-default">↑↓</kbd>
-            navigate
+        <div className="flex items-center gap-6 px-6 py-3.5 border-t border-slate-100 dark:border-slate-800/50 bg-slate-50/50 dark:bg-slate-900/50 text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+          <span className="flex items-center gap-2">
+            <kbd className="px-1.5 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">↑↓</kbd>
+            Jump
           </span>
-          <span className="flex items-center gap-1">
-            <kbd className="px-1 py-0.5 rounded font-mono bg-surface-muted border border-border-default">↵</kbd>
-            select
+          <span className="flex items-center gap-2">
+            <kbd className="px-1.5 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">↵</kbd>
+            Commit
           </span>
-          <span className="flex items-center gap-1">
-            <kbd className="px-1 py-0.5 rounded font-mono bg-surface-muted border border-border-default">{modKey}K</kbd>
-            toggle
+          <span className="flex items-center gap-2">
+            <kbd className="px-1.5 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">{modKey}K</kbd>
+            Toggle
           </span>
         </div>
       </div>

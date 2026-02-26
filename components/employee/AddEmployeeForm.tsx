@@ -40,7 +40,6 @@ type FormState = {
     designation: string;
     phone: string;
     salary: string;
-    employmentType: "full-time" | "part-time" | "contract" | "intern";
     joiningDate: string;
     status: "active" | "inactive" | "probation" | "on leave";
 };
@@ -56,7 +55,6 @@ const INITIAL_STATE: FormState = {
     designation: "",
     phone: "",
     salary: "4500",
-    employmentType: "full-time",
     joiningDate: new Date().toISOString().split("T")[0],
     status: "active",
 };
@@ -89,7 +87,6 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                 designation: editData.designation ?? "",
                 phone: editData.phone ?? "",
                 salary: String(editData.salary ?? 4500),
-                employmentType: editData.employmentType ?? "full-time",
                 joiningDate: toDateInput(editData.joiningDate),
                 status: editData.status ?? "active",
             });
@@ -208,10 +205,10 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
         form.designation?.trim() &&
         Object.values(errors).every(e => !e);
 
-    const inputClass = "w-full rounded-xl border border-border-default pl-11 pr-4 py-3 text-[15px] outline-none transition-all bg-surface-base/50 backdrop-blur-sm hover:bg-surface-hover/80 focus:ring-4 focus:ring-brand-subtle focus:border-brand-primary text-text-primary placeholder:text-text-tertiary shadow-sm";
-    const labelClass = "block text-[10px] font-extrabold uppercase tracking-[0.15em] mb-2.5 ml-1 text-text-tertiary flex items-center gap-2";
-    const sectionHeaderClass = "flex items-center gap-3 mb-8 text-[12px] font-black text-text-secondary uppercase tracking-[0.2em] border-b border-border-subtle pb-4";
-    const iconWrapperClass = "absolute left-4 top-1/2 -translate-y-1/2 text-text-tertiary group-focus-within:text-brand-primary transition-colors";
+    const inputClass = "w-full rounded-xl border border-slate-200 dark:border-slate-800 pl-11 pr-4 py-3 text-[15px] outline-none transition-all bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 focus:ring-4 focus:ring-brand-subtle focus:border-brand-primary text-slate-900 dark:text-slate-100 placeholder:text-slate-400 shadow-sm";
+    const labelClass = "block text-[11px] font-bold uppercase tracking-wider mb-2.5 ml-1 text-slate-600 dark:text-slate-400 flex items-center gap-2";
+    const sectionHeaderClass = "flex items-center gap-3 mb-8 text-[12px] font-black text-slate-800 dark:text-slate-200 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800 pb-4";
+    const iconWrapperClass = "absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-primary transition-colors";
 
     return (
         <div className="flex flex-col h-full pt-10">
@@ -240,7 +237,7 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                                     value={form.id}
                                     onChange={(e) => handleIdChange(e.target.value)}
                                     disabled={isEdit}
-                                    className={`${inputClass} ${errors.id ? 'border-danger focus:ring-danger-subtle focus:border-danger' : idStatus === 'ok' ? 'border-success' : ''} ${isEdit ? 'opacity-60 cursor-not-allowed bg-surface-muted/50' : ''}`}
+                                    className={`${inputClass} ${errors.id ? 'border-rose-500 focus:ring-rose-500/10 focus:border-rose-500' : idStatus === 'ok' ? 'border-emerald-500' : ''} ${isEdit ? 'opacity-60 cursor-not-allowed bg-slate-50 dark:bg-slate-900/50' : ''}`}
                                     autoFocus={!isEdit}
                                 />
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -264,7 +261,7 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                                     placeholder="e.g. EMP-001"
                                     value={form.employeeId}
                                     onChange={(e) => handleEmployeeIdChange(e.target.value)}
-                                    className={`${inputClass} ${empIdStatus === 'ok' ? 'border-success' : ''}`}
+                                    className={`${inputClass} ${empIdStatus === 'ok' ? 'border-emerald-500' : ''}`}
                                 />
                             </div>
                         </div>
@@ -360,7 +357,7 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                             </div>
                             {errors.designation && <p className="text-[10px] text-danger mt-2 ml-1 font-bold">{errors.designation}</p>}
                             {isDesignationFocused && filteredRoles.length > 0 && (
-                                <div className="absolute top-full left-0 w-full mt-2 bg-surface-base/90 backdrop-blur-xl border border-border-default rounded-xl shadow-2xl z-20 overflow-hidden animate-fade-in-up">
+                                <div className="absolute top-full left-0 w-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl z-20 overflow-hidden animate-fade-in-up">
                                     {filteredRoles.map(role => (
                                         <button
                                             key={role}
@@ -370,9 +367,9 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                                                 setIsDesignationFocused(false);
                                                 setErrors(prev => ({ ...prev, designation: "" }));
                                             }}
-                                            className="w-full text-left px-5 py-3.5 text-[13px] font-semibold hover:bg-brand-primary hover:text-white text-text-primary transition-all border-b border-border-subtle last:border-0 flex items-center gap-3"
+                                            className="w-full text-left px-5 py-4 text-[13px] font-black italic uppercase tracking-tight hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-100 transition-all border-b border-slate-100 dark:border-slate-800 last:border-0 flex items-center gap-3"
                                         >
-                                            <IoBriefcaseOutline size={14} className="opacity-50" />
+                                            <div className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
                                             {role}
                                         </button>
                                     ))}
@@ -395,23 +392,6 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                                     className={inputClass}
                                 />
                             </div>
-                        </div>
-
-                        <div>
-                            <label htmlFor="employmentType" className={labelClass}>
-                                Employment Type
-                            </label>
-                            <Dropdown
-                                options={[
-                                    { value: "full-time", label: "Full-time" },
-                                    { value: "part-time", label: "Part-time" },
-                                    { value: "contract", label: "Contract" },
-                                    { value: "intern", label: "Intern" }
-                                ]}
-                                value={form.employmentType}
-                                onChange={(val) => setForm(f => ({ ...f, employmentType: val as any }))}
-                                className="w-full h-11"
-                            />
                         </div>
                     </div>
                 </div>
@@ -484,10 +464,10 @@ export default function AddEmployeeForm({ onSuccess, onCancel, editData }: AddEm
                 <button
                     type="button"
                     onClick={onCancel}
-                    className="w-full md:w-auto px-8 py-3.5 rounded-xl text-sm font-semibold text-text-secondary hover:bg-surface-hover transition-colors border border-transparent hover:border-border-default flex items-center justify-center gap-2 group"
+                    className="w-full md:w-auto px-8 py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-700 flex items-center justify-center gap-3 group"
                 >
                     <IoCloseOutline size={20} className="group-hover:rotate-90 transition-transform" />
-                    Cancel
+                    Abort Process
                 </button>
                 <button
                     type="button"

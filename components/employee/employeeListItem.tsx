@@ -46,33 +46,33 @@ export default function EmployeeListItem({
     <>
       <tr
         onClick={() => setIsExpanded(!isExpanded)}
-        className={`transition-all cursor-pointer hover:bg-surface-hover group border-b border-border-default animate-fade-in-up ${isExpanded ? 'bg-surface-muted/50' : ''}`}
+        className={`transition-all cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 group border-b border-slate-200 dark:border-slate-800 animate-fade-in-up ${isExpanded ? 'bg-slate-50/50 dark:bg-slate-900/50' : ''}`}
         style={{
-          background: checked ? "var(--brand-subtle)" : undefined,
+          background: checked ? "rgba(var(--brand-primary-rgb), 0.05)" : undefined,
           animationDelay: `${index * 50}ms`,
           animationFillMode: 'both'
         }}
       >
         {/* Checkbox */}
         <td
-          className={`pl-6 pr-2 ${density === 'compact' ? 'py-2' : 'py-4'} w-12 border-b border-border-default`}
+          className={`pl-6 pr-2 ${density === 'compact' ? 'py-2' : 'py-4'} w-12 border-b border-slate-200 dark:border-slate-800`}
           onClick={(e) => e.stopPropagation()}
         >
           <input
             type="checkbox"
             checked={checked}
             onChange={() => onCheck(mongoId)}
-            className="w-4 h-4 rounded border-border-default text-brand-primary focus:ring-brand-subtle cursor-pointer"
+            className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-brand-primary focus:ring-brand-subtle cursor-pointer transition-colors"
           />
         </td>
 
         {/* Employee ID */}
-        <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} text-[13px] font-mono tracking-wider font-bold text-text-tertiary border-b border-border-default`}>
+        <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} text-[13px] font-mono tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800`}>
           {employee.employeeId || `#${employee.id}`}
         </td>
 
         {/* Employee name + email */}
-        <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} border-b border-border-default`}>
+        <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} border-b border-slate-200 dark:border-slate-800`}>
           <div className="flex items-center gap-3">
             <div
               className={`${density === 'compact' ? 'w-8 h-8 text-[10px]' : 'w-10 h-10 text-xs'} rounded-full flex items-center justify-center font-bold shrink-0 bg-brand-subtle text-brand-primary ring-1 ring-brand-muted transition-transform group-hover:scale-110`}
@@ -81,12 +81,12 @@ export default function EmployeeListItem({
             </div>
             <div className="min-w-0">
               <span
-                className={`${density === 'compact' ? 'text-xs' : 'text-sm'} font-semibold leading-tight hover:text-brand-primary transition-colors text-text-primary block truncate max-w-[200px]`}
+                className={`${density === 'compact' ? 'text-xs' : 'text-sm'} font-bold leading-tight hover:text-brand-primary transition-colors text-slate-900 dark:text-slate-100 block truncate max-w-[200px]`}
                 style={{ viewTransitionName: `employee-name-${mongoId}` }}
               >
                 {employee.name}
               </span>
-              <p className={`${density === 'compact' ? 'text-[11px]' : 'text-[13px]'} mt-0.5 leading-tight text-text-secondary truncate max-w-[200px]`}>
+              <p className={`${density === 'compact' ? 'text-[11px]' : 'text-[13px]'} mt-0.5 leading-tight text-slate-600 dark:text-slate-400 truncate max-w-[200px]`}>
                 {employee.email}
               </p>
             </div>
@@ -95,9 +95,9 @@ export default function EmployeeListItem({
 
         {/* Department */}
         {visibleColumns.has("dept") && (
-          <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} whitespace-nowrap border-b border-border-default text-center`}>
+          <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} whitespace-nowrap border-b border-slate-200 dark:border-slate-800 text-center`}>
             <span
-              className={`inline-flex items-center gap-1.5 ${density === 'compact' ? 'text-[10px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} font-semibold rounded-full border shadow-sm transition-all group-hover:border-brand-muted ${deptColors.badge}`}
+              className={`inline-flex items-center gap-1.5 ${density === 'compact' ? 'text-[10px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} font-bold rounded-full border shadow-sm transition-all group-hover:border-brand-muted ${deptColors.badge}`}
             >
               <span className={`w-1.5 h-1.5 rounded-full ${deptColors.dot}`} />
               {employee.department}
@@ -107,10 +107,10 @@ export default function EmployeeListItem({
 
         {/* Designation */}
         {visibleColumns.has("designation") && (
-          <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} border-b border-border-default`}>
-            <div className={`flex items-center gap-2 ${density === 'compact' ? 'text-[11px]' : 'text-[13px]'} font-medium text-text-tertiary`}>
-              <IoBriefcaseOutline size={density === 'compact' ? 13 : 15} className="shrink-0 text-text-tertiary group-hover:text-brand-primary transition-colors" />
-              <span className="truncate max-w-40 text-text-secondary">
+          <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} border-b border-slate-200 dark:border-slate-800`}>
+            <div className={`flex items-center gap-2 ${density === 'compact' ? 'text-[11px]' : 'text-[13px]'} font-bold text-slate-500 dark:text-slate-400`}>
+              <IoBriefcaseOutline size={density === 'compact' ? 13 : 15} className="shrink-0 text-slate-400 dark:text-slate-500 group-hover:text-brand-primary transition-colors" />
+              <span className="truncate max-w-40 text-slate-700 dark:text-slate-300">
                 {employee.designation || "—"}
               </span>
             </div>
@@ -118,22 +118,22 @@ export default function EmployeeListItem({
         )}
 
         {/* Status */}
-        <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} whitespace-nowrap border-b border-border-default text-center`}>
+        <td className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} whitespace-nowrap border-b border-slate-200 dark:border-slate-800 text-center`}>
           <span
             className={`inline-flex items-center gap-1.5 ${density === 'compact' ? 'text-[11px] px-2 py-0.5' : 'text-[12px] px-2.5 py-1'} font-bold uppercase tracking-widest rounded-full transition-all group-hover:ring-brand-primary ${employee.status === "active"
-              ? "bg-success-subtle text-success ring-1 ring-success shadow-sm"
+              ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-500/30 shadow-sm"
               : employee.status === "on leave"
-                ? "bg-amber-subtle text-amber ring-1 ring-amber shadow-sm"
+                ? "bg-amber-500/10 text-amber-700 dark:text-amber-400 ring-1 ring-amber-500/30 shadow-sm"
                 : employee.status === "probation"
-                  ? "bg-indigo-subtle text-indigo ring-1 ring-indigo shadow-sm"
-                  : "bg-surface-muted text-text-secondary ring-1 ring-border-default shadow-sm"
+                  ? "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 ring-1 ring-indigo-500/30 shadow-sm"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 ring-1 ring-slate-200 dark:ring-slate-700 shadow-sm"
               }`}
           >
             <span
-              className={`w-1.5 h-1.5 rounded-full ${employee.status === "active" ? "bg-success" :
-                employee.status === "on leave" ? "bg-amber" :
-                  employee.status === "probation" ? "bg-indigo" :
-                    "bg-text-tertiary"
+              className={`w-1.5 h-1.5 rounded-full ${employee.status === "active" ? "bg-emerald-500" :
+                employee.status === "on leave" ? "bg-amber-500" :
+                  employee.status === "probation" ? "bg-indigo-500" :
+                    "bg-slate-400"
                 }`}
             />
             {employee.status}
@@ -142,7 +142,7 @@ export default function EmployeeListItem({
 
         {/* Action menu */}
         <td
-          className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} w-12 text-right border-b border-border-default`}
+          className={`px-4 ${density === 'compact' ? 'py-1' : 'py-4'} w-12 text-right border-b border-slate-200 dark:border-slate-800`}
           onClick={(e) => e.stopPropagation()}
         >
           <Dropdown
@@ -156,7 +156,7 @@ export default function EmployeeListItem({
               if (val === "delete") onDelete(employee);
             }}
             trigger={
-              <div className="p-1.5 rounded-full transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100 hover:bg-surface-hover text-text-primary">
+              <div className="p-1.5 rounded-full transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">
                 <IoEllipsisHorizontal size={18} />
               </div>
             }
@@ -166,34 +166,34 @@ export default function EmployeeListItem({
 
       {/* Expanded Details Row */}
       {isExpanded && (
-        <tr className="bg-surface-muted/30 border-b border-border-default animate-in fade-in slide-in-from-top-1 duration-300">
+        <tr className="bg-slate-50/30 dark:bg-slate-900/10 border-b border-slate-200 dark:border-slate-800 animate-in fade-in slide-in-from-top-1 duration-300">
           <td colSpan={7} className="px-10 py-6">
             <div className="flex flex-wrap gap-12 items-start stagger-1">
               <div className="space-y-3">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-tertiary">Direct Contact</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Direct Contact</p>
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm font-medium text-text-primary">
-                    <span className="w-8 h-8 rounded-lg bg-surface-base flex items-center justify-center text-text-tertiary">@</span>
+                  <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-slate-100">
+                    <span className="w-8 h-8 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400">@</span>
                     {employee.email}
                   </div>
-                  <div className="flex items-center gap-2 text-sm font-medium text-text-primary">
-                    <span className="w-8 h-8 rounded-lg bg-surface-base flex items-center justify-center text-text-tertiary">#</span>
+                  <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-slate-100">
+                    <span className="w-8 h-8 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400">#</span>
                     {employee.phone || "No phone listed"}
                   </div>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-tertiary">Employment Detail</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Employment Detail</p>
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm font-medium text-text-primary">
-                    <span className="w-8 h-8 rounded-lg bg-surface-base flex items-center justify-center text-text-tertiary">
+                  <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-slate-100">
+                    <span className="w-8 h-8 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400">
                       <IoBriefcaseOutline size={16} />
                     </span>
                     Joined {new Date(employee.joiningDate).toLocaleDateString(undefined, { dateStyle: 'long' })}
                   </div>
-                  <div className="flex items-center gap-2 text-sm font-medium text-text-primary">
-                    <span className="w-8 h-8 rounded-lg bg-surface-base flex items-center justify-center text-text-tertiary">
+                  <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-slate-100">
+                    <span className="w-8 h-8 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400">
                       <IoPersonOutline size={14} />
                     </span>
                     Status: <span className="capitalize">{employee.status}</span>
@@ -213,7 +213,7 @@ export default function EmployeeListItem({
                     e.stopPropagation();
                     onEdit(employee);
                   }}
-                  className="px-6 py-2.5 rounded-xl text-xs font-bold border border-border-default bg-surface-base text-text-primary hover:bg-surface-hover transition-all"
+                  className="px-6 py-2.5 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
                 >
                   Quick Edit
                 </button>

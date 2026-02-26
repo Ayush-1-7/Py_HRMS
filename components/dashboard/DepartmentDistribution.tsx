@@ -57,25 +57,28 @@ export default function DepartmentDistribution({ data, loading }: DepartmentDist
                     </Pie>
                     <Tooltip
                         contentStyle={{
-                            backgroundColor: "var(--surface-base)",
+                            backgroundColor: "var(--surface-elevated)", // Solid background
                             border: "1px solid var(--border-default)",
                             borderRadius: "12px",
                             fontSize: "13px",
                             fontWeight: "600",
-                            boxShadow: "var(--shadow-lg)"
+                            padding: "12px 16px",
+                            boxShadow: "var(--shadow-lg)",
+                            color: "var(--text-primary)"
                         }}
                     />
                     <Legend
                         verticalAlign="bottom"
                         align="center"
                         iconType="circle"
-                        iconSize={8}
+                        iconSize={10}
                         wrapperStyle={{
-                            fontSize: '12px',
-                            paddingTop: '35px',
-                            fontWeight: '600',
+                            fontSize: '13px',
+                            paddingTop: '40px',
+                            fontWeight: '700',
                             color: 'var(--text-secondary)',
-                            letterSpacing: '0.01em'
+                            letterSpacing: '0.02em',
+                            textTransform: 'uppercase'
                         }}
                     />
                 </PieChart>

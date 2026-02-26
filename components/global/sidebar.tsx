@@ -57,38 +57,38 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       )}
 
       <aside
-        className={`sidebar-root fixed left-0 top-0 h-screen flex flex-col z-50 overflow-hidden transition-transform duration-300 lg:translate-x-0 ${isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"}`}
+        className={`sidebar-root fixed left-0 top-0 h-screen flex flex-col z-50 overflow-hidden transition-all lg:translate-x-0 ${isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"}`}
         style={{
           width: "var(--sidebar-width)",
-          background: "var(--surface-base)",
+          background: "var(--background)",
         }}
       >
         <div className="flex flex-col h-full py-6">
           <div className="flex items-center gap-3 mb-10 min-w-0 px-6">
-            <div className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white" style={{ background: "var(--brand-primary)" }}>
+            <div className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-primary/20" style={{ background: "var(--brand-primary)" }}>
               <LogoGraphic />
             </div>
             <div className="flex flex-col truncate">
-              <span className="font-bold text-xl tracking-tight leading-none text-primary">
+              <span className="font-bold text-xl tracking-tight leading-none text-slate-900 dark:text-slate-100">
                 {BRANDING.APP_NAME}
               </span>
-              <span className="text-[10px] uppercase font-medium tracking-wider text-brand-hover mt-1 truncate">
+              <span className="text-[10px] uppercase font-black tracking-widest text-brand-primary mt-1.5 truncate">
                 {BRANDING.TAGLINE}
               </span>
             </div>
             <button
               onClick={onClose}
-              className="lg:hidden ml-auto p-1.5 rounded-lg transition-colors hover:bg-surface-muted text-muted"
+              className="lg:hidden ml-auto p-2 rounded-lg transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
             >
               <IoCloseOutline size={24} />
             </button>
           </div>
 
-          <p className="px-6 mb-3 text-[11px] font-bold uppercase tracking-widest text-muted">
-            Main Menu
+          <p className="px-6 mb-4 text-[11px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+            Main Navigation
           </p>
 
-          <nav className="flex-1 flex flex-col gap-1 px-4">
+          <nav className="flex-1 flex flex-col gap-1.5 px-4">
             {filteredItems.map(({ label, href, icon: Icon }) => {
               const active = pathname === href || pathname.startsWith(href + "/");
               return (
@@ -96,9 +96,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                   key={href}
                   href={href}
                   onClick={() => onClose?.()}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group min-w-0 relative ${active
-                    ? "bg-surface-hover text-brand-primary"
-                    : "hover:bg-surface-muted text-text-secondary hover:text-text-primary"
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all group min-w-0 relative ${active
+                    ? "bg-slate-100 dark:bg-slate-800 text-brand-primary shadow-sm ring-1 ring-slate-200/50 dark:ring-slate-700/50"
+                    : "hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
                     }`}
                   title={label}
                 >
@@ -106,9 +106,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                     <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-r-full shadow-sm bg-brand-primary" />
                   )}
                   <span className={`shrink-0 w-5 flex items-center justify-center transition-transform duration-200 ${active ? "scale-110" : "group-hover:scale-110"}`}>
-                    <Icon size={20} />
+                    <Icon size={20} className={active ? "text-brand-primary" : "text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300"} />
                   </span>
-                  <span className={`text-sm whitespace-nowrap overflow-hidden ${active ? "font-semibold" : "font-medium"}`}>
+                  <span className={`text-[13px] whitespace-nowrap overflow-hidden ${active ? "font-bold" : "font-bold"}`}>
                     {label}
                   </span>
                 </Link>
@@ -116,20 +116,20 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             })}
           </nav>
 
-          <div className="px-4 pt-6 mt-auto">
+          <div className="px-4 pt-6 mt-auto border-t border-slate-100 dark:border-slate-800/50">
             <button
               onClick={toggle}
-              className="w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all border border-transparent hover:border-border-default hover:bg-surface-hover group text-text-primary"
+              className="w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 group text-slate-900 dark:text-slate-100"
             >
-              <div className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center bg-surface-muted text-text-tertiary group-hover:text-brand-primary transition-colors">
+              <div className="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 group-hover:text-brand-primary transition-colors border border-slate-200 dark:border-slate-700">
                 {theme === "dark" ? <IoSunnyOutline size={18} /> : <IoMoonOutline size={18} />}
               </div>
               <div className="flex flex-col items-start gap-0.5">
-                <span className="text-sm font-medium">
+                <span className="text-[13px] font-bold">
                   {theme === "dark" ? "Light Mode" : "Dark Mode"}
                 </span>
-                <span className="text-[10px] text-text-tertiary">
-                  Switch appearance
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight">
+                  Calibrate Visuals
                 </span>
               </div>
             </button>

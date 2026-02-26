@@ -33,12 +33,12 @@ export default function AttendanceTrend({ data, loading }: AttendanceTrendProps)
                             <stop offset="95%" stopColor="var(--success-primary)" stopOpacity={0} />
                         </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-default)" opacity={0.5} />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-default)" opacity={0.8} />
                     <XAxis
                         dataKey="date"
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fontSize: 11, fill: "var(--text-secondary)", fontWeight: 500 }}
+                        tick={{ fontSize: 12, fill: "var(--text-secondary)", fontWeight: 600 }}
                         tickFormatter={(str) => {
                             const d = new Date(str);
                             return d.toLocaleDateString(undefined, { weekday: 'short' });
@@ -47,17 +47,20 @@ export default function AttendanceTrend({ data, loading }: AttendanceTrendProps)
                     <YAxis
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fontSize: 11, fill: "var(--text-secondary)", fontWeight: 500 }}
+                        tick={{ fontSize: 12, fill: "var(--text-secondary)", fontWeight: 600 }}
                     />
                     <Tooltip
                         contentStyle={{
-                            backgroundColor: "var(--surface-base)",
+                            backgroundColor: "var(--surface-elevated)", // Solid background
                             border: "1px solid var(--border-default)",
                             borderRadius: "12px",
-                            fontSize: "12px",
-                            boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
+                            fontSize: "13px",
+                            padding: "12px 16px",
+                            boxShadow: "var(--shadow-lg)",
+                            color: "var(--text-primary)"
                         }}
-                        itemStyle={{ fontWeight: "bold" }}
+                        itemStyle={{ fontWeight: "600", color: "var(--text-primary)" }}
+                        cursor={{ stroke: 'var(--border-strong)', strokeWidth: 1 }}
                     />
                     <Area
                         type="monotone"

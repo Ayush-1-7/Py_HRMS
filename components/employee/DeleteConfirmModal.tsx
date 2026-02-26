@@ -36,55 +36,55 @@ export default function DeleteConfirmModal({
     <div
       ref={overlayRef}
       onMouseDown={handleOverlay}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 dark:bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 dark:bg-black/80 backdrop-blur-sm p-4 animate-fade-in"
     >
       <div
-        className="card-base relative w-full max-w-[400px] p-6 md:p-8 animate-in zoom-in-95 duration-200 shadow-xl"
+        className="relative w-full max-w-[420px] p-10 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-2xl animate-in zoom-in-95 duration-300"
       >
         {/* Header */}
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-6 right-6">
           <button
             onClick={onCancel}
-            className="p-1.5 rounded-full transition-colors hover:bg-surface-hover text-text-secondary hover:text-text-primary"
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-95"
           >
-            <IoCloseOutline size={20} />
+            <IoCloseOutline size={24} />
           </button>
         </div>
 
         {/* Body */}
-        <div className="flex flex-col items-center text-center space-y-4 mb-8 mt-2">
-          <div className="w-14 h-14 rounded-full bg-danger-subtle flex items-center justify-center text-danger ring-8 ring-danger/10">
-            <IoWarningOutline size={28} />
+        <div className="flex flex-col items-center text-center space-y-6 mt-4">
+          <div className="w-20 h-20 rounded-[2rem] bg-rose-500/10 text-rose-500 flex items-center justify-center shadow-inner ring-8 ring-rose-500/5">
+            <IoWarningOutline size={40} />
           </div>
-          <div className="space-y-1.5">
-            <h2 className="text-xl font-bold tracking-tight text-text-primary">
-              {count > 1 ? `Remove ${count} employees?` : "Remove employee?"}
+          <div className="space-y-3">
+            <h2 className="text-2xl font-black tracking-tight text-slate-900 dark:text-slate-100 italic">
+              Confirm <span className="text-rose-500">Deletion</span>
             </h2>
-            <p className="text-[15px] leading-relaxed max-w-[280px] mx-auto text-text-secondary">
+            <p className="text-[13px] font-bold text-slate-500 dark:text-slate-400 leading-relaxed uppercase tracking-tight">
               {count > 1
-                ? "This action cannot be undone. Are you sure you want to permanently delete these records?"
-                : "This action cannot be undone. Are you sure you want to permanently delete this record?"}
+                ? `You are about to permanently purge ${count} records. This operation is irreversible.`
+                : "You are about to permanently purge this employee node from the repository."}
             </p>
           </div>
         </div>
 
         {/* Actions */}
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-4 mt-10">
           <button
             type="button"
             onClick={onConfirm}
             disabled={loading}
-            className="w-full py-3 rounded-xl text-[15px] bg-danger hover:bg-danger-hover text-white font-semibold transition-colors disabled:opacity-50 shadow-sm"
+            className="w-full py-4 bg-rose-500 text-white rounded-2xl text-[11px] font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-rose-500/20 disabled:opacity-50"
           >
-            {loading ? "Removing…" : "Yes, remove"}
+            {loading ? "PURGING…" : "CONFIRM PURGE"}
           </button>
           <button
             type="button"
             onClick={onCancel}
             disabled={loading}
-            className="w-full py-3 rounded-xl text-[15px] font-semibold transition-colors hover:bg-surface-hover disabled:opacity-50 text-text-primary"
+            className="w-full py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-2xl text-[11px] font-black uppercase tracking-widest border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all active:scale-[0.98]"
           >
-            Cancel
+            Abort Operation
           </button>
         </div>
       </div>

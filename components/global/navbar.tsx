@@ -64,14 +64,14 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
         {/* Hamburger for mobile */}
         <button
           onClick={onMenuClick}
-          className="lg:hidden p-2 -ml-2 rounded-lg transition-colors hover:bg-surface-muted text-text-primary"
+          className="lg:hidden p-2 -ml-2 rounded-lg transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-100"
         >
           <HiMenuAlt2 size={24} />
         </button>
 
         {/* Page title */}
         <h1
-          className="text-lg md:text-xl lg:text-2xl font-semibold tracking-tight truncate text-text-primary"
+          className="text-lg md:text-xl lg:text-2xl font-bold tracking-tight truncate text-slate-900 dark:text-slate-100"
         >
           {title}
         </h1>
@@ -81,15 +81,15 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
       <div className="flex items-center gap-3">
         <button
           onClick={openSearch}
-          className="flex items-center gap-2 px-3 py-1.5 md:py-2 rounded-xl text-sm transition-all border group hover:border-brand-subtle hover:shadow-sm bg-surface-base border-border-default items-center"
+          className="flex items-center gap-2 px-3 py-1.5 md:py-2 rounded-xl text-sm transition-all border group hover:border-brand-primary hover:shadow-md bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800"
           style={{ minWidth: mounted ? (isMac ? 140 : 160) : 140 }}
         >
           <IconSearch />
-          <span className="hidden sm:inline flex-1 text-left truncate text-text-tertiary">
+          <span className="hidden sm:inline flex-1 text-left truncate text-slate-500 dark:text-slate-400 font-medium">
             Search {BRANDING.SHORT_NAME}...
           </span>
           <kbd
-            className="hidden sm:inline-flex text-[10px] px-1.5 py-0.5 rounded font-mono font-medium bg-surface-muted border-border-default text-text-tertiary border"
+            className="hidden sm:inline-flex text-[10px] px-1.5 py-0.5 rounded font-mono font-bold bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 border shadow-sm"
           >
             {modKey}K
           </kbd>
@@ -101,8 +101,8 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
         <Dropdown
           options={[
             { value: "profile", label: "My Profile", icon: <IoPersonCircleOutline size={18} className="text-brand-primary" /> },
-            { value: "settings", label: "Settings", icon: <IoSettingsOutline size={18} className="text-slate-400" /> },
-            { value: "logout", label: "Sign Out", icon: <IoLogOutOutline size={18} className="text-danger" /> }
+            { value: "settings", label: "Settings", icon: <IoSettingsOutline size={18} className="text-slate-500" /> },
+            { value: "logout", label: "Sign Out", icon: <IoLogOutOutline size={18} className="text-danger-primary" /> }
           ]}
           value=""
           onChange={(val) => {
@@ -112,7 +112,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
             }
           }}
           trigger={
-            <div className="flex items-center justify-center w-9 h-9 rounded-full border border-border-default bg-brand-subtle text-brand-primary font-semibold text-sm cursor-pointer shadow-xs transition-transform hover:scale-105 active:scale-95 group">
+            <div className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 dark:border-slate-700 bg-brand-subtle text-brand-primary font-bold text-sm cursor-pointer shadow-sm transition-transform hover:scale-105 active:scale-95 group">
               AD
             </div>
           }

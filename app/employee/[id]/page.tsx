@@ -229,87 +229,87 @@ export default function EmployeeProfilePage() {
   ];
 
   return (
-    <div className="p-4 md:p-8 max-w-[1400px] mx-auto animate-in fade-in duration-500">
+    <div className="p-6 md:p-10 max-w-[1400px] mx-auto animate-fade-in bg-white dark:bg-slate-950 min-h-screen">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm mb-8 text-text-tertiary">
-        <Link href="/" className="hover:text-brand-primary transition-colors">Directory</Link>
-        <IoChevronForwardOutline size={12} />
-        <span className="font-semibold text-text-primary">Employee Profile</span>
+      <nav className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest mb-10 text-slate-400 dark:text-slate-500 italic">
+        <Link href="/" className="hover:text-brand-primary transition-colors">Directory Node</Link>
+        <IoChevronForwardOutline size={12} className="text-slate-300" />
+        <span className="text-slate-900 dark:text-slate-100">Personnel Profile</span>
       </nav>
 
       {/* Main Layout Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Profile Sidebar */}
         <aside className="lg:col-span-4 space-y-6">
-          <div className="card-base p-8 text-center space-y-4 sticky top-8">
-            <div className="relative inline-block">
-              <div className="w-24 h-24 rounded-full bg-brand-subtle text-brand-primary flex items-center justify-center text-3xl font-bold ring-4 ring-background shadow-xl mx-auto">
+          <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-6 sticky top-10">
+            <div className="relative inline-block group">
+              <div className="w-32 h-32 rounded-[2.5rem] bg-brand-subtle text-brand-primary flex items-center justify-center text-4xl font-black shadow-xl mx-auto ring-4 ring-white dark:ring-slate-950 group-hover:scale-105 transition-transform duration-500">
                 {employee.name.split(' ').map(n => n[0]).join('')}
               </div>
-              <div className="absolute bottom-1 right-1 w-6 h-6 rounded-full bg-success ring-4 ring-surface-base border border-white" />
+              <div className="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-emerald-500 ring-4 ring-white dark:ring-slate-900 border-2 border-white dark:border-slate-800" />
             </div>
 
-            <div className="space-y-1">
-              <h1 className="text-2xl font-bold text-text-primary tracking-tight">{employee.name}</h1>
-              <p className="text-sm font-medium text-text-secondary">{employee.designation}</p>
+            <div className="space-y-2">
+              <h1 className="text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight italic">{employee.name}</h1>
+              <p className="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em]">{employee.designation}</p>
             </div>
 
-            <div className="flex items-center justify-center gap-2 pt-2">
-              <span className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full ${employee.status === 'active' ? 'bg-success-subtle text-success' : 'bg-surface-muted text-text-tertiary'}`}>
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <span className={`text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full ${employee.status === 'active' ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700'}`}>
                 {employee.status}
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-brand-subtle text-brand-primary">
+              <span className="text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full bg-brand-subtle text-brand-primary border border-brand-primary/10">
                 {employee.department}
               </span>
             </div>
 
-            <div className="pt-6 space-y-3">
+            <div className="pt-8 space-y-4">
               <button
                 onClick={generatePaySlip}
                 disabled={generatingPdf}
-                className="w-full btn-primary py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-bold shadow-sm hover:shadow-lg transition-all active:scale-95 disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-3 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-xl hover:scale-[1.03] active:scale-[0.98] transition-all disabled:opacity-50 ring-4 ring-slate-900/10 dark:ring-white/10"
               >
                 {generatingPdf ? (
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white dark:border-slate-900/30 dark:border-t-slate-900 rounded-full animate-spin" />
                 ) : (
-                  <IoWalletOutline size={18} />
+                  <IoWalletOutline size={20} />
                 )}
-                {generatingPdf ? "Generating..." : "Generate Pay Slip"}
+                {generatingPdf ? "Generating..." : "Generate Pay Entry"}
               </button>
 
               <button
                 onClick={() => setIsEditModalOpen(true)}
-                className="w-full btn-secondary py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-bold hover:bg-surface-hover transition-colors active:scale-95 border border-border-default"
+                className="w-full py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-2xl text-[11px] font-black uppercase tracking-widest border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-3 active:scale-[0.98]"
               >
-                <IoCreateOutline size={18} />
-                Modify Profile
+                <IoCreateOutline size={20} className="text-brand-primary" />
+                Override Attributes
               </button>
 
               <button
                 onClick={() => setIsDeleteModalOpen(true)}
-                className="w-full py-3 rounded-xl text-xs font-bold bg-danger-subtle text-danger hover:bg-danger-hover transition-colors flex items-center justify-center gap-2 transition-all active:scale-95"
+                className="w-full py-4 bg-rose-500/10 text-rose-600 dark:text-rose-400 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border border-rose-500/20 hover:bg-rose-500 text-white transition-all flex items-center justify-center gap-3 active:scale-[0.98] mt-4"
               >
-                <IoTrashOutline size={14} /> Remove Member
+                <IoTrashOutline size={16} /> Retire Node
               </button>
             </div>
           </div>
         </aside>
 
         {/* Content Area */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-10">
           {/* Tabs Navigation */}
-          <div className="flex border-b border-border-default gap-8 overflow-x-auto no-scrollbar">
+          <div className="flex border-b border-slate-100 dark:border-slate-800 gap-10 overflow-x-auto thin-scrollbar">
             {[
-              { id: "overview", label: "Overview", icon: IoPersonOutline },
-              { id: "attendance", label: "Attendance History", icon: IoTimeOutline },
-              { id: "activity", label: "Recent Activity", icon: IoStatsChartOutline },
+              { id: "overview", label: "Executive Info", icon: IoPersonOutline },
+              { id: "attendance", label: "Attendance Log", icon: IoTimeOutline },
+              { id: "activity", label: "Operation History", icon: IoStatsChartOutline },
             ].map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center gap-2 py-4 text-sm font-bold border-b-2 transition-all whitespace-nowrap ${activeTab === tab.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-text-tertiary hover:text-text-secondary'}`}
+                className={`flex items-center gap-3 py-5 text-[11px] font-black uppercase tracking-[0.2em] border-b-4 transition-all whitespace-nowrap italic ${activeTab === tab.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'}`}
               >
-                <tab.icon size={18} />
+                <tab.icon size={20} />
                 {tab.label}
               </button>
             ))}
@@ -318,19 +318,19 @@ export default function EmployeeProfilePage() {
           {/* Tab Content */}
           <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
             {activeTab === "overview" && (
-              <div className="space-y-8">
+              <div className="space-y-12">
                 {/* Personal Section */}
-                <section className="space-y-4">
-                  <h3 className="text-sm font-bold uppercase tracking-widest text-text-tertiary">Personal Identity</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <section className="space-y-6">
+                  <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 italic">Structural Identity</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {personalInfo.map((item, idx) => (
-                      <div key={idx} className="card-base p-4 flex items-center gap-4 group hover:border-brand-primary transition-colors">
-                        <div className="w-10 h-10 rounded-xl bg-surface-muted flex items-center justify-center text-text-tertiary group-hover:bg-brand-subtle group-hover:text-brand-primary transition-colors">
-                          <item.icon size={20} />
+                      <div key={idx} className="bg-white dark:bg-slate-950 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 flex items-center gap-5 group hover:border-brand-primary transition-all shadow-sm">
+                        <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-slate-400 group-hover:bg-brand-subtle group-hover:text-brand-primary transition-all shadow-inner">
+                          <item.icon size={22} />
                         </div>
                         <div>
-                          <p className="text-[10px] font-bold text-text-tertiary uppercase tracking-wider">{item.label}</p>
-                          <p className="text-sm font-semibold text-text-primary">{item.value}</p>
+                          <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{item.label}</p>
+                          <p className="text-[13px] font-black text-slate-900 dark:text-slate-100">{item.value}</p>
                         </div>
                       </div>
                     ))}
@@ -338,17 +338,17 @@ export default function EmployeeProfilePage() {
                 </section>
 
                 {/* Professional Section */}
-                <section className="space-y-4">
-                  <h3 className="text-sm font-bold uppercase tracking-widest text-text-tertiary">Professional Credentials</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <section className="space-y-6">
+                  <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 italic">Entity Credentials</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {professionalInfo.map((item, idx) => (
-                      <div key={idx} className="card-base p-4 flex items-center gap-4 group hover:border-brand-primary transition-colors">
-                        <div className="w-10 h-10 rounded-xl bg-surface-muted flex items-center justify-center text-text-tertiary group-hover:bg-brand-subtle group-hover:text-brand-primary transition-colors">
-                          <item.icon size={20} />
+                      <div key={idx} className="bg-white dark:bg-slate-950 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 flex items-center gap-5 group hover:border-brand-primary transition-all shadow-sm">
+                        <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-slate-400 group-hover:bg-brand-subtle group-hover:text-brand-primary transition-all shadow-inner">
+                          <item.icon size={22} />
                         </div>
                         <div>
-                          <p className="text-[10px] font-bold text-text-tertiary uppercase tracking-wider">{item.label}</p>
-                          <p className="text-sm font-semibold text-text-primary">{item.value}</p>
+                          <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{item.label}</p>
+                          <p className="text-[13px] font-black text-slate-900 dark:text-slate-100">{item.value}</p>
                         </div>
                       </div>
                     ))}
@@ -358,52 +358,50 @@ export default function EmployeeProfilePage() {
             )}
 
             {activeTab === "attendance" && (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold uppercase tracking-widest text-text-tertiary">Last 30 Days Performance</h3>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-success" />
-                      <span className="text-[10px] font-bold text-text-secondary">Present</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-danger" />
-                      <span className="text-[10px] font-bold text-text-secondary">Absent</span>
-                    </div>
+              <div className="space-y-8">
+                <div className="flex items-center justify-between px-2">
+                  <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 italic">30-Day Operational Log</h3>
+                  <div className="flex items-center gap-6">
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/20" />
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Satisfactory</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-lg shadow-rose-500/20" />
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Deficit</span>
                   </div>
                 </div>
 
-                <div className="card-base overflow-hidden">
-                  <table className="w-full text-left">
+                <div className="bg-white dark:bg-slate-950 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+                  <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="bg-surface-muted text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
-                        <th className="px-6 py-3">Date</th>
-                        <th className="px-6 py-3">Status</th>
-                        <th className="px-6 py-3">Clock In</th>
-                        <th className="px-6 py-3">Notes</th>
+                      <tr className="bg-slate-50/50 dark:bg-slate-900/50 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800">
+                        <th className="px-8 py-5">Temporal Index</th>
+                        <th className="px-8 py-5">Status Code</th>
+                        <th className="px-8 py-5">Synchronization</th>
+                        <th className="px-8 py-5">Operational Note</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-border-default">
-                      {loadingAttendance ? [1, 2, 3].map(i => <tr key={i}><td colSpan={4} className="p-4"><Skeleton className="h-4 w-full" /></td></tr>) :
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                      {loadingAttendance ? [1, 2, 3, 4, 5].map(i => <tr key={i}><td colSpan={4} className="px-8 py-6"><Skeleton className="h-6 w-full bg-slate-50 dark:bg-slate-900" /></td></tr>) :
                         attendanceHistory?.dates.map((date, idx) => {
                           const record = attendanceHistory.employees[0]?.attendance[date];
                           if (!record || record.status === 'unmarked') return null;
                           return (
-                            <tr key={idx} className="hover:bg-surface-hover transition-colors">
-                              <td className="px-6 py-4 text-xs font-semibold text-text-primary">{new Date(date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</td>
-                              <td className="px-6 py-4">
-                                <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded ${record.status === 'present' ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'}`}>
+                            <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
+                              <td className="px-8 py-5 text-[13px] font-black text-slate-900 dark:text-slate-100">{new Date(date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                              <td className="px-8 py-5">
+                                <span className={`text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border ${record.status === 'present' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-rose-500/10 text-rose-600 border-rose-500/20'}`}>
                                   {record.status}
                                 </span>
                               </td>
-                              <td className="px-6 py-4 text-xs text-text-secondary font-mono">09:12 AM</td>
-                              <td className="px-6 py-4 text-xs text-text-tertiary italic">{record.note || "Standard Shift"}</td>
+                              <td className="px-8 py-5 text-[11px] font-black text-slate-500 dark:text-slate-400 font-mono uppercase tracking-widest">09:12 AM Sync</td>
+                              <td className="px-8 py-5 text-[11px] font-bold text-slate-400 dark:text-slate-500 italic uppercase underline underline-offset-4 decoration-slate-200 dark:decoration-slate-800">{record.note || "Standard Operational Cycle"}</td>
                             </tr>
                           );
                         })
                       }
                       {!loadingAttendance && (!attendanceHistory || attendanceHistory.dates.length === 0) && (
-                        <tr><td colSpan={4} className="px-6 py-12 text-center text-sm text-text-tertiary">No attendance records found for this period.</td></tr>
+                        <tr><td colSpan={4} className="px-8 py-16 text-center text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 italic">No historical nodes identified.</td></tr>
                       )}
                     </tbody>
                   </table>
@@ -412,20 +410,20 @@ export default function EmployeeProfilePage() {
             )}
 
             {activeTab === "activity" && (
-              <div className="space-y-6">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-text-tertiary">Operational Timeline</h3>
-                <div className="space-y-6 pl-4 border-l-2 border-border-default">
+              <div className="space-y-8">
+                <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 italic">Evolutionary Log</h3>
+                <div className="space-y-10 pl-6 border-l-4 border-slate-100 dark:border-slate-800">
                   {[
-                    { title: "Profile Refined", date: "Just now", type: "system", desc: "Premium theme attributes applied." },
-                    { title: "Department Moved", date: "2 days ago", type: "hr", desc: "Transferred from General to Management." },
-                    { title: "Joined the Platform", date: joinDate, type: "join", desc: "Employee record officially created." },
+                    { title: "Heuristic Profile Refined", date: "Just now", type: "system", desc: "Premium accessibility layers and high-contrast logic successfully integrated." },
+                    { title: "Segment Allocation Updated", date: "2 days ago", type: "hr", desc: "Personnel node reassigned from General to Core Strategic Management." },
+                    { title: "Entity Initialization", date: joinDate, type: "join", desc: "Core employee record synchronized with the master repository." },
                   ].map((item, idx) => (
                     <div key={idx} className="relative group">
-                      <div className="absolute -left-[25px] top-1.5 w-4 h-4 rounded-full bg-surface-base border-2 border-brand-primary group-hover:scale-125 transition-transform" />
-                      <div className="space-y-1">
-                        <p className="text-xs font-bold text-text-primary">{item.title}</p>
-                        <p className="text-[10px] text-text-tertiary font-medium">{item.date}</p>
-                        <p className="text-xs text-text-secondary leading-relaxed">{item.desc}</p>
+                      <div className="absolute -left-[30px] top-1.5 w-5 h-5 rounded-full bg-white dark:bg-slate-950 border-4 border-brand-primary shadow-lg shadow-brand-primary/20 group-hover:scale-125 transition-transform duration-500" />
+                      <div className="space-y-2">
+                        <p className="text-[14px] font-black text-slate-900 dark:text-slate-100 italic tracking-tight">{item.title}</p>
+                        <p className="text-[10px] text-slate-400 dark:text-slate-500 font-black uppercase tracking-widest">{item.date}</p>
+                        <p className="text-[13px] font-bold text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl">{item.desc}</p>
                       </div>
                     </div>
                   ))}
