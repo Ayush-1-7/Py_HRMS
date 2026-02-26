@@ -1,154 +1,271 @@
-# HRMS Lite
+# ElevateHR — Premium HR Management Platform
 
-A clean, modern **Human Resource Management System** built with Next.js, MongoDB, and Tailwind CSS. It covers the core workflows any HR team needs. Managing employees, tracking attendance, and viewing analytics, all through a snappy single-page experience with dark/light mode support.
-
-> Built as a full-stack project to explore MongoDB aggregation pipelines, modular API design, and the Next.js App Router.
-
-![Dashboard Overview](public/screenshots/empLight.png)
+> A production-grade, full-stack Human Resource Management System built with **Next.js 16**, **MongoDB Atlas**, and **Tailwind CSS 4**. Manage your workforce, track attendance, oversee payroll, and generate executive reports — all from a single, beautifully designed interface.
 
 ---
 
-## What It Does
+## ✨ Features
 
-### Employee Directory (Home)
+### 🏠 Executive Dashboard
+- **Live workforce statistics** — Total employees, active headcount, attendance rate, present/absent/unmarked counts for today
+- **7-day attendance trend** — Bar/line chart rendered with Recharts showing present vs. absent over the last week
+- **Workforce distribution** — Pie chart breaking down employee count by department
+- **Operational alerts** — Real-time cards for absent employees and unmarked attendance, with urgency badges
+- **Recently joined** — A live feed of the last 5 new employees with their role, department, and join date
+- **Quick actions** — One-click navigation to Add Employee, Verify Compliance, and Generate Reports
+- **Sparkline indicators** — Inline micro-charts on each KPI card showing historical trend
 
-The landing page is a searchable, paginated employee list. You can add employees individually or in bulk, edit their details inline, and remove them with a confirmation step. A status card and department pie chart sit alongside the table for a quick snapshot.
+### 👥 Team Directory (Employee Management)
+- **Paginated employee list** — Server-side pagination (configurable page size, max 100 per page)
+- **Global search** — Instant full-text search across name, email, department, designation, and employee ID
+- **Department filter** — Filter by any of the 10 defined departments
+- **Status filter** — Filter by active / inactive / probation / on leave
+- **Add employee** — Modal form with full validation (required fields, email format, duplicate ID/email check)
+- **Edit employee** — Inline editing of all employee fields
+- **Delete employee** — Single and bulk delete support
+- **Bulk upload** — Import multiple employees at once via the bulk API endpoint
+- **Employee detail page** — Dedicated profile page at `/employee/[id]` with full record view
 
-![Employee Directory](public/screenshots/empDark.png)
+### 📅 Attendance Tracking
+- **Date-range picker** — View attendance across any date range (API enforces a 7-day window per request)
+- **Column-based view** — Each employee shown as a row; date columns show present / absent / unmarked status
+- **One-click upsert** — Click any cell to toggle between `present`, `absent`, and `unmarked` (saved immediately via PUT API)
+- **Search & filter** — Search by name, email, ID, department, or designation
+- **Pagination** — Handles large workforces with cursor-based pagination
 
-### Dashboard
+### 💰 Payroll Management
+- **Payroll roster** — Full employee table with base salary, department, employment type, and tax compliance status
+- **Summary KPIs** — Total monthly payroll liability, verified disbursement rate, average gross salary
+- **Live search** — Debounced search (300 ms) by name, ID, or department — refreshes payroll table in real time
+- **PDF export** — One-click export of the full projected payroll report as a professionally formatted PDF (via jsPDF), with auto-pagination for large rosters
 
-A view that pulls together employee stats and attendance analytics. You can filter by date range, all time, this month, or a specific year, and see top performers, frequent absentees, and per-department attendance gauges all in one place.
+### 📊 Executive Reports
+- **Attendance engagement chart** — 7-day present vs. absent trend (re-uses shared AttendanceTrend component)
+- **Workforce distribution chart** — Department breakdown pie chart
+- **PDF export** — Export full workforce inventory report (name, department, status) as a PDF
 
+### ⚙️ Settings
+- Company name, logo, and address configuration
+- Tax percentage and allowances percentage (used for payroll calculations)
+- Persisted in MongoDB with timestamps
 
-![Attendance](public/screenshots/attnDark.png)
+---
 
-### Employee Profile
+## 🗂 Project Structure
 
-Click on any employee to see their full profile — ID, email, phone, department, designation, and joining date. Edit or delete right from here. The page uses the View Transitions API for a smooth animated navigation.
+```
+hrms-main/
+├── app/
+│   ├── api/
+│   │   ├── attendance/       # GET (date range, paginated), PUT (upsert)
+│   │   └── employees/
+│   │       ├── route.ts      # GET (search/filter/paginate), POST (create)
+│   │       ├── [id]/         # GET, PUT, DELETE single employee
+│   │       ├── bulk/         # POST bulk create
+│   │       ├── bulk-delete/  # POST bulk delete
+│   │       └── check-id/     # GET check if employee ID is available
+│   ├── dashboard/            # Executive Dashboard page
+│   ├── attendance/           # Attendance Tracker page
+│   ├── employee/[id]/        # Employee detail/profile page
+│   ├── payroll/              # Payroll Management page
+│   ├── reports/              # Executive Reports page
+│   ├── layout.tsx            # Root layout (Sidebar, Navbar, Toaster, AuthProvider)
+│   └── page.tsx              # Home → Team Directory
+├── components/
+│   ├── dashboard/            # Sparkline, AttendanceTrend, DepartmentDistribution, AttendanceSummary
+│   ├── employee/             # EmployeeList, EmployeeForm, EmployeeCard
+│   ├── global/               # Sidebar, Navbar, CommandSearch
+│   ├── providers/            # ThemeProvider, AuthProvider
+│   └── ui/                   # Skeleton, Sonner (toast)
+├── config/
+│   └── mongodb.ts            # Mongoose connection with serverless-safe caching
+├── lib/
+│   ├── departments.ts        # 10 departments + color tokens
+│   ├── roles.ts              # 16 designation types
+│   ├── constants.ts          # App branding & UI constants
+│   └── utils.ts              # Shared utilities
+├── models/
+│   ├── Employee.ts           # Mongoose schema (15+ fields, indexed)
+│   ├── Attendance.ts         # Attendance schema (unique per employee+date)
+│   ├── Setting.ts            # Company settings schema
+│   └── User.ts               # User/auth schema
+├── services/
+│   ├── employeeService.ts    # Client-side API wrapper for employee endpoints
+│   └── attendanceService.ts  # Client-side API wrapper for attendance endpoints
+├── scripts/
+│   ├── seed-data.ts          # Seeds 55 realistic employees + attendance records
+│   └── seed.ts               # Role update seed script
+├── public/                   # SVGs, logos, fonts
+├── vercel.json               # Vercel deployment config (region, security headers)
+├── next.config.ts            # Next.js config (strict mode, image optimization)
+└── .env.example              # Environment variable reference
+```
 
-![Dashboard](public/screenshots/dashDark.png)
+---
 
+## 🗄 Data Models
+
+### Employee
+| Field | Type | Notes |
+|---|---|---|
+| `id` | Number | Unique numeric ID |
+| `employeeId` | String | e.g. `EMP-001`, unique |
+| `name` | String | Trimmed |
+| `email` | String | Lowercase, unique |
+| `department` | Enum | 10 departments |
+| `designation` | String | Free text |
+| `phone` | String | Optional |
+| `joiningDate` | Date | Defaults to now |
+| `status` | Enum | `active` / `inactive` / `probation` / `on leave` |
+| `role` | Enum | `Admin` / `HR Manager` / `Employee` |
+| `employmentType` | Enum | `Full-time` / `Part-time` / `Contract` |
+| `salary` | Number | Optional, USD |
+| `emergencyContact` | Object | name, phone, relation |
+| `address` | String | Optional |
+
+### Attendance
+| Field | Type | Notes |
+|---|---|---|
+| `employee` | ObjectId | Ref: Employee |
+| `date` | Date | Normalized to midnight UTC |
+| `status` | Enum | `present` / `absent` / `unmarked` |
+| `note` | String | Max 200 chars |
+
+**Indexes:** Unique compound index on `(employee, date)` · Range index on `(date, status)`
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- A [MongoDB Atlas](https://www.mongodb.com/atlas) cluster (free tier works)
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/Ayush-1-7/Py_HRMS.git
+cd Py_HRMS/hrms-main
+npm install
+```
+
+### 2. Configure Environment
+
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local`:
+
+```env
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.mongodb.net/hrms?retryWrites=true&w=majority
+```
+
+### 3. Seed the Database (Optional)
+
+Populate 55 realistic employees and attendance records:
+
+```bash
+npx ts-node --project tsconfig.json scripts/seed-data.ts
+```
+
+### 4. Run Development Server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 🌐 API Reference
+
+### Employees
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/employees` | List employees (paginated, search, filter) |
+| `POST` | `/api/employees` | Create new employee |
+| `GET` | `/api/employees/[id]` | Get single employee |
+| `PUT` | `/api/employees/[id]` | Update employee |
+| `DELETE` | `/api/employees/[id]` | Delete employee |
+| `POST` | `/api/employees/bulk` | Bulk create employees |
+| `POST` | `/api/employees/bulk-delete` | Bulk delete employees |
+| `GET` | `/api/employees/check-id` | Check if an employee ID is available |
+
+**Query params for `GET /api/employees`:**
+- `page` — Page number (default: 1)
+- `pageSize` — Results per page (default: 20, max: 100)
+- `search` — Full-text search across name, email, department, designation, employeeId
+- `status` — Filter by status (`active`, `inactive`, `probation`, `on leave`)
+- `keyword` — Filter by department name
 
 ### Attendance
 
-A day-by-day attendance grid where you pick a date range (up to 7 days) and mark each employee as on-time, late, absent, or on holiday by clicking through the cells. Summary cards at the top show attendance rates and counts for the selected window.
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/attendance` | Get attendance grid (employees + date columns) |
+| `PUT` | `/api/attendance` | Upsert a single attendance record |
 
-![Employee Profile](public/screenshots/profileDark.png)
+**Query params for `GET /api/attendance`:**
+- `from` — Start date `YYYY-MM-DD` (default: today)
+- `to` — End date `YYYY-MM-DD` (clamped to 7 days from `from`)
+- `page`, `pageSize`, `search`, `status` — Same as employees
 
-## More Screenshots
-![Add Employee](public/screenshots/addEmpLight.png)
-![Employee Overview](public/screenshots/empOverviewLight.png)
-
-### Payroll & Reports
-
-These sections are planned but currently show an "Under Construction" placeholder.
-
----
-
-## How It's Built
-
-### MongoDB Aggregation Pipelines
-
-Instead of pulling raw data and crunching numbers on the server, the heavy lifting happens inside MongoDB itself using `$facet`, `$group`, `$lookup`, and `$match` stages:
-
-- **Employee stats** — a single `$facet` query returns total, active, and inactive counts plus a department breakdown in one round trip.
-- **Paginated lists** — `$facet` handles both the data slice (`$skip`/`$limit`) and the total count in a single pipeline, avoiding a separate count query.
-- **Attendance analytics** — the most involved pipeline joins attendance records with employees via `$lookup`, then fans out into five `$facet` buckets: overall summary, department-level rates, daily trends, top absentees, and top performers.
-
-This keeps things fast and moves the computation close to the data.
-
-### REST API
-
-All data flows through a clean set of Next.js Route Handlers under `/api`. Every response follows a consistent `{ success, data, message, pagination }` shape.
-
-| Method | Endpoint | Purpose |
-|--------|----------|---------|
-| GET | `/api/employees` | Paginated list with search, status & department filters |
-| POST | `/api/employees` | Create a new employee |
-| GET | `/api/employees/:id` | Fetch a single employee |
-| PUT | `/api/employees/:id` | Update an employee |
-| DELETE | `/api/employees/:id` | Remove an employee |
-| POST | `/api/employees/bulk` | Bulk import employees |
-| DELETE | `/api/employees/bulk-delete` | Bulk remove employees |
-| GET | `/api/employees/check-id` | Live duplicate-ID validation |
-| GET | `/api/employees/stats` | Aggregated employee statistics |
-| GET | `/api/attendance` | Employees + attendance for a date range |
-| PUT | `/api/attendance` | Upsert a single attendance record |
-| GET | `/api/attendance/analytics` | Full attendance analytics |
-
-### Modular Architecture
-
-The codebase is split into clear layers:
-
-```
-app/api/         → Route Handlers (request/response logic)
-services/        → API client functions with typed responses
-models/          → Mongoose schemas and indexes
-components/      → Reusable UI, grouped by feature
-config/          → Database connection
-lib/             → Shared utilities and constants
+**Body for `PUT /api/attendance`:**
+```json
+{ "employeeId": "<ObjectId>", "date": "YYYY-MM-DD", "status": "present|absent|unmarked", "note": "..." }
 ```
 
-Each API route focuses on request validation and response formatting, while Mongoose models define the data shape and indexes (like the compound `{ employee, date }` unique index on attendance). The `services/` layer gives the frontend clean, typed functions to call without worrying about fetch boilerplate.
+### Settings
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/settings` | Fetch company settings (auto-creates defaults) |
+| `POST` | `/api/settings` | Update company settings |
 
 ---
 
-## Tech Stack
+## ☁️ Deploy to Vercel
 
-| | |
+This project is pre-configured for Vercel with `vercel.json` (Mumbai region, security headers).
+
+1. Push to GitHub
+2. Import the repo at [vercel.com/new](https://vercel.com/new)
+3. Add the environment variable in **Vercel Dashboard → Settings → Environment Variables**:
+   - `MONGODB_URI` = your MongoDB Atlas connection string
+4. Deploy — Vercel auto-detects Next.js
+
+> **MongoDB Atlas note:** Make sure to whitelist all IPs (`0.0.0.0/0`) in Atlas Network Access, since Vercel uses dynamic IPs.
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
 |---|---|
-| **Framework** | Next.js (App Router) |
-| **Language** | TypeScript |
-| **Database** | MongoDB Atlas + Mongoose |
-| **Styling** | Tailwind CSS with CSS custom properties for theming |
-| **Charts** | react-minimal-pie-chart, react-gauge-component |
-| **UX** | Cmd+K command palette, skeleton loading, View Transitions API |
-
-## Getting Started
-
-1. **Install dependencies**
-
-   ```bash
-   npm install
-   ```
-
-2. **Set up environment variables**
-
-   Create `.env.local` in the project root:
-
-   ```env
-   MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
-   ```
-
-3. **Run the dev server**
-
-   ```bash
-   npm run dev
-   ```
-
-   Open [http://localhost:3000](http://localhost:3000).
+| Framework | Next.js 16 (App Router, Turbopack) |
+| Language | TypeScript 5 |
+| Database | MongoDB Atlas (Mongoose 9) |
+| Styling | Tailwind CSS 4 + Custom CSS Variables |
+| Charts | Recharts 3 + react-minimal-pie-chart |
+| PDF Export | jsPDF 4 |
+| Toast Notifications | Sonner |
+| Icons | react-icons (Ionicons 5) |
+| Auth | jose (JWT), bcryptjs |
+| Deployment | Vercel |
 
 ---
 
-## Live Demo & Links
+## 📦 Departments & Roles
 
-| | |
-|---|---|
-| **Live Application** | `https://hrms.kunaldutta.com` |
-| **GitHub Repository** | `https://github.com/kunalduttagit/hrms` |
+**10 Departments:** Engineering · Marketing · Sales · Human Resources · Finance · Operations · Design · Product · Legal · Customer Support
 
----
-
-## Assumptions & Limitations
-
-- **Single admin user** — no authentication or role-based access; the app assumes one trusted admin.
-- **Payroll & Reports** — intentionally out of scope per the assignment; placeholder pages are included for navigation completeness.
-- **Attendance date range** — capped at 7 days per view to keep the grid readable and limit payload size.
-- **Employee ID** — numeric, user-assigned (not auto-incremented) to allow custom ID schemes.
-- **Time zones** — attendance dates are normalized to UTC midnight; no per-user timezone handling.
-- **No auth** — all endpoints are public; suitable for internal/demo use only.
+**16 Designations:** Software Engineer · Senior Software Engineer · Lead Engineer · Product Manager · Product Designer · UI/UX Designer · HR Manager · HR Specialist · Sales Executive · Account Manager · Marketing Specialist · Content Strategist · Operations Manager · QA Analyst · DevOps Engineer · Data Scientist
 
 ---
 
-Built with caffeine and curiosity.
+## 📄 License
+
+MIT — feel free to use, fork, and build on this project.
