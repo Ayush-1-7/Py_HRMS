@@ -11,7 +11,7 @@ import {
   IoCalendarOutline,
   IoWalletOutline,
   IoBarChartOutline,
-  IoSettingsOutline,
+  IoBarChartOutline,
   IoMoonOutline,
   IoSunnyOutline,
   IoCloseOutline
@@ -44,7 +44,6 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     { label: "Attendance", href: "/attendance", icon: IoCalendarOutline, roles: ["admin", "employee"] },
     { label: "Payroll", href: "/payroll", icon: IoWalletOutline, roles: ["admin"] },
     { label: "Reports", href: "/reports", icon: IoBarChartOutline, roles: ["admin"] },
-    { label: "Settings", href: "/settings", icon: IoSettingsOutline, roles: ["admin"] },
   ];
 
   const filteredItems = navItems.filter(item => item.roles.includes(user?.role || ""));
