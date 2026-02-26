@@ -301,9 +301,9 @@ export default function DashboardPage() {
               </p>
               <button
                 onClick={() => setDocModalOpen(true)}
-                className="group flex items-center gap-2 px-5 py-2.5 bg-white text-brand-primary rounded-xl text-[13px] font-bold shadow-lg shadow-black/10 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] transition-all ring-1 ring-white/50"
+                className="group flex items-center gap-2 px-5 py-2.5 bg-white text-slate-950 rounded-xl text-[13px] font-bold shadow-lg shadow-black/10 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] transition-all ring-1 ring-white/50"
               >
-                <IoDocumentTextOutline size={18} className="group-hover:rotate-6 transition-transform" />
+                <IoDocumentTextOutline size={18} className="group-hover:rotate-6 transition-transform opacity-70" />
                 Read Documentation
               </button>
             </div>
