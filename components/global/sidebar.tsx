@@ -11,7 +11,6 @@ import {
   IoCalendarOutline,
   IoWalletOutline,
   IoBarChartOutline,
-  IoBarChartOutline,
   IoMoonOutline,
   IoSunnyOutline,
   IoCloseOutline
