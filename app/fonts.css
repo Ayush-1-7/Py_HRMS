@@ -1,0 +1,154 @@
+/* ═══════════════════════════════════════════════════════════════════════ */
+/*  Custom Font Face Definitions                                            */
+/* ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Aeonik (OTF) ───────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/New Aeonik/AeonikTRIAL-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/New Aeonik/AeonikTRIAL-LightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/New Aeonik/AeonikTRIAL-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/New Aeonik/AeonikTRIAL-RegularItalic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/New Aeonik/AeonikTRIAL-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/New Aeonik/AeonikTRIAL-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* ── IDGrotesk (WOFF2) ──────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-Thin.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-ThinItalic.woff2") format("woff2");
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-Book.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-BookItalic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-MediumItalic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-SemiboldItalic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Grotesk";
+  src: url("/fonts/IDGrotesk-WOFF2/IDGroteskTrial-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* ── Tailwind theme integration ──────────────────────────────────────── */
+
+@theme {
+  --font-aeonik: "Aeonik", system-ui, sans-serif;
+  --font-grotesk: "Grotesk", system-ui, sans-serif;
+}

@@ -1,0 +1,603 @@
+@import "tailwindcss";
+@import "./fonts.css";
+
+/* ── NovaHR Enterprise Tokens (Light) ───────────────────────── */
+:root {
+  /* Surface Tokens */
+  --background: #fcfcfc;
+  /* Clean, almost white but slightly warm/neutral */
+  --foreground: #111827;
+  /* Gray 900 for sharp contrast */
+
+  --surface-base: #ffffff;
+  --surface-hover: #f9fafb;
+  /* Gray 50 */
+  --surface-muted: #f3f4f6;
+  /* Gray 100 */
+  --surface-elevated: #ffffff;
+
+  /* Borders */
+  --border-subtle: #f3f4f6;
+  /* Gray 100 */
+  --border-default: #e5e7eb;
+  /* Gray 200 */
+  --border-hover: #d1d5db;
+  /* Gray 300 */
+  --border-strong: #9ca3af;
+  /* Gray 400 */
+
+  /* Typography */
+  --text-primary: #111827;
+  /* Gray 900 */
+  --text-secondary: #4b5563;
+  /* Gray 600 */
+  --text-tertiary: #6b7280;
+  /* Gray 500 */
+  --text-inverse: #ffffff;
+
+  /* Primary Brand (Executive Navy / Indigo) */
+  --brand-primary: #1e3a8a;
+  /* Blue 900 - authoritative */
+  --brand-hover: #1e40af;
+  /* Blue 800 */
+  --brand-subtle: #eff6ff;
+  /* Blue 50 */
+  --brand-muted: #dbeafe;
+  /* Blue 100 */
+
+  /* Accent Brand (Vibrant Indigo for CTAs) */
+  --accent-primary: #4f46e5;
+  /* Indigo 600 */
+  --accent-hover: #4338ca;
+  /* Indigo 700 */
+  --accent-subtle: #e0e7ff;
+  /* Indigo 100 */
+  --accent-foreground: #ffffff;
+
+  /* Semantic Colors - Executive Pastel Palette */
+  --danger-primary: #e11d48;
+  /* Rose 600 */
+  --danger-subtle: #fff1f2;
+  /* Rose 50 */
+  --danger-fg: #be123c;
+
+  --success-primary: #059669;
+  /* Emerald 600 */
+  --success-subtle: #f0fdf4;
+  /* Emerald 50 */
+  --success-fg: #047857;
+
+  --warning-primary: #d97706;
+  /* Amber 600 */
+  --warning-subtle: #fffbeb;
+  /* Amber 50 */
+  --warning-fg: #b45309;
+
+  --info-primary: #2563eb;
+  /* Blue 600 */
+  --info-subtle: #eff6ff;
+  --info-fg: #1d4ed8;
+
+  /* Layout dimensions */
+  --sidebar-width: 260px;
+  --sidebar-collapsed: 68px;
+  --navbar-height: 64px;
+  /* Tighter enterprise topnav */
+
+  /* Shadows (Crisp, layered elevation) */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
+
+  /* Focus Rings */
+  --ring-primary: rgba(79, 70, 229, 0.4);
+
+  /* Border radii (Sharper for enterprise feel) */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+/* ── NovaHR Enterprise Tokens (Dark) ────────────────────────── */
+html.dark {
+  /* High-end layered dark mode */
+  --background: #0b0f19;
+  /* Deep slate, not pitch black */
+  --foreground: #f9fafb;
+  /* Gray 50 */
+
+  /* Surface colors scale (Layered depth) */
+  --surface-base: #111827;
+  /* Gray 900 for cards */
+  --surface-hover: #1f2937;
+  /* Gray 800 */
+  --surface-muted: #1f2937;
+  /* Gray 800 */
+  --surface-elevated: #1f2937;
+  /* Gray 800 for modals/popovers */
+
+  /* Borders (Low-contrast to avoid harsh lines) */
+  --border-subtle: #1f2937;
+  /* Gray 800 */
+  --border-default: #374151;
+  /* Gray 700 */
+  --border-hover: #4b5563;
+  /* Gray 600 */
+  --border-strong: #6b7280;
+  /* Gray 500 */
+
+  /* Typography */
+  --text-primary: #f9fafb;
+  /* Gray 50 */
+  --text-secondary: #9ca3af;
+  /* Gray 400 */
+  --text-tertiary: #6b7280;
+  /* Gray 500 */
+  --text-inverse: #111827;
+
+  /* Primary Brand (Adjusted brightness for dark mode contrast) */
+  --brand-primary: #3b82f6;
+  /* Blue 500 */
+  --brand-hover: #60a5fa;
+  /* Blue 400 */
+  --brand-subtle: rgba(59, 130, 246, 0.15);
+  --brand-muted: rgba(59, 130, 246, 0.25);
+
+  /* Accent Brand */
+  --accent-primary: #6366f1;
+  /* Indigo 500 */
+  --accent-hover: #818cf8;
+  /* Indigo 400 */
+  --accent-subtle: rgba(99, 102, 241, 0.15);
+  --accent-foreground: #ffffff;
+
+  /* Semantic Colors */
+  --danger-primary: #ef4444;
+  /* Red 500 */
+  --danger-subtle: rgba(239, 68, 68, 0.15);
+  --success-primary: #10b981;
+  /* Emerald 500 */
+  --success-subtle: rgba(16, 185, 129, 0.15);
+  --warning-primary: #f59e0b;
+  /* Amber 500 */
+  --warning-subtle: rgba(245, 158, 11, 0.15);
+
+  /* Shadows (Deeper and harsher drop in dark mode for true depth) */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+
+  /* Focus Rings */
+  --ring-primary: rgba(99, 102, 241, 0.6);
+}
+
+@custom-variant dark (&:where(html.dark, html.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-surface: var(--surface-base);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-muted: var(--surface-muted);
+
+  --color-border: var(--border-default);
+  --color-border-hover: var(--border-hover);
+  --color-border-subtle: var(--border-subtle);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-muted: var(--text-tertiary);
+
+  --color-brand: var(--brand-primary);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-subtle: var(--brand-subtle);
+
+  --color-accent: var(--accent-primary);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-subtle: var(--accent-subtle);
+
+  --color-danger: var(--danger-primary);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-danger-fg: var(--danger-fg);
+  --color-success: var(--success-primary);
+  --color-success-subtle: var(--success-subtle);
+  --color-success-fg: var(--success-fg);
+  --color-warning: var(--warning-primary);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-warning-fg: var(--warning-fg);
+  --color-info: var(--info-primary);
+  --color-info-subtle: var(--info-subtle);
+  --color-info-fg: var(--info-fg);
+
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-heading);
+}
+
+/* ── Badge Utility System ──────────────────────────────── */
+.badge-base {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.625rem;
+  /* 10px */
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  line-height: 1;
+}
+
+.badge-success {
+  background: var(--success-subtle);
+  color: var(--success-fg);
+  box-shadow: 0 0 0 1px var(--success-subtle);
+}
+
+.badge-danger {
+  background: var(--danger-subtle);
+  color: var(--danger-fg);
+}
+
+.badge-warning {
+  background: var(--warning-subtle);
+  color: var(--warning-fg);
+}
+
+.badge-brand {
+  background: var(--brand-subtle);
+  color: var(--brand-primary);
+}
+
+.badge-neutral {
+  background: var(--surface-muted);
+  color: var(--text-secondary);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium Header Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+::selection {
+  background-color: var(--accent-subtle);
+  color: var(--accent-primary);
+}
+
+/* Theme transition */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.25s;
+  animation-timing-function: ease-in-out;
+}
+
+/* ── Layout shell ──────────────────────────────────────── */
+.layout-content {
+  padding-left: 0;
+  padding-top: var(--navbar-height);
+  transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
+}
+
+/* Base application container optimized for reading/focus */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+/* Navbar shell */
+.navbar-root {
+  height: var(--navbar-height) !important;
+  left: 0 !important;
+  width: 100% !important;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border-bottom: 1px solid var(--border-default);
+  z-index: 40;
+}
+
+html.dark .navbar-root {
+  background-color: rgba(11, 15, 25, 0.8) !important;
+  border-bottom: 1px solid var(--border-default);
+}
+
+@media (min-width: 1024px) {
+  .layout-content {
+    padding-left: var(--sidebar-width);
+  }
+
+  .sidebar-root {
+    width: var(--sidebar-width) !important;
+    display: flex !important;
+    border-right: 1px solid var(--border-default);
+    background-color: var(--surface-base);
+  }
+
+  /* When sidebar is collapsed */
+  .layout-content.sidebar-collapsed {
+    padding-left: var(--sidebar-collapsed);
+  }
+
+  .navbar-root {
+    left: var(--sidebar-width) !important;
+    width: calc(100% - var(--sidebar-width)) !important;
+  }
+
+  .navbar-root.sidebar-collapsed {
+    left: var(--sidebar-collapsed) !important;
+    width: calc(100% - var(--sidebar-collapsed)) !important;
+  }
+}
+
+/* ── UI Core Primitives ─────────────────────────────────── */
+
+/* Panels and Cards */
+.card-base {
+  background: var(--surface-base);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s ease;
+}
+
+.card-hover:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+/* ── Buttons ───────────────────────────── */
+.btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: 0.875rem;
+  /* 14px */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+.btn-base:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.btn-base:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-base:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring-primary);
+}
+
+.btn-primary {
+  background-color: var(--brand-primary);
+  color: #ffffff;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--brand-hover);
+}
+
+.btn-secondary {
+  background-color: var(--surface-base);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--surface-hover);
+  border-color: var(--border-hover);
+}
+
+.btn-accent {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-accent:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--surface-muted);
+  color: var(--text-primary);
+}
+
+/* Input Forms */
+.form-input {
+  background-color: var(--surface-base);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  transition: all 0.15s ease-in-out;
+  box-shadow: var(--shadow-xs);
+}
+
+.form-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.form-input:hover {
+  border-color: var(--border-hover);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px var(--accent-primary), 0 0 0 3px var(--ring-primary);
+}
+
+.form-input:disabled {
+  background-color: var(--surface-muted);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* --- Ripple Bg--- */
+@theme inline {
+  --animate-ripple: ripple var(--duration, 2s) ease calc(var(--i, 0) * 0.2s) infinite;
+
+  @keyframes ripple {
+
+    0%,
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+      transform: translate(-50%, -50%) scale(0.9);
+    }
+  }
+
+  --animate-fade-in-up: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fadeIn 0.3s ease-out forwards;
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  --animate-shimmer: shimmer 2s linear infinite;
+
+  @keyframes shimmer {
+    from {
+      background-position: -200% 0;
+    }
+
+    to {
+      background-position: 200% 0;
+    }
+  }
+
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- Animation Utilities --- */
+.stagger-1 {
+  animation-delay: 50ms;
+  opacity: 0;
+}
+
+.stagger-2 {
+  animation-delay: 100ms;
+  opacity: 0;
+}
+
+.stagger-3 {
+  animation-delay: 150ms;
+  opacity: 0;
+}
+
+.stagger-4 {
+  animation-delay: 200ms;
+  opacity: 0;
+}
+
+.stagger-5 {
+  animation-delay: 250ms;
+  opacity: 0;
+}
+
+/* ------Remove number spinner------ */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* ── Custom Scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 2px solid var(--background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  border: none;
+}
