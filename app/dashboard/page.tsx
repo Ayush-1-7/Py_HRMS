@@ -11,6 +11,7 @@ import DepartmentDistribution from "@/components/dashboard/DepartmentDistributio
 import AttendanceSummary from "@/components/dashboard/AttendanceSummary";
 import type { IEmployee } from "@/models/Employee";
 import DocumentationModal from "@/components/dashboard/DocumentationModal";
+import AIInsightsPanel from "@/components/ai/AIInsightsPanel";
 import { IoDocumentTextOutline } from "react-icons/io5";
 
 export default function DashboardPage() {
@@ -186,6 +187,9 @@ export default function DashboardPage() {
           </div>
         ))}
       </section>
+
+      {/* ── AI Insights Panel ── */}
+      <AIInsightsPanel />
 
       {/* ── Strategic Analytics Zone ── */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in-up stagger-3">

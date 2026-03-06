@@ -9,6 +9,7 @@ import Sidebar from "@/components/global/sidebar";
 import Navbar from "@/components/global/navbar";
 import CommandSearch from "@/components/global/CommandSearch";
 import { Toaster } from "@/components/ui/sonner";
+import AIAssistant from "@/components/ai/AIAssistant";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -54,6 +55,7 @@ export default function RootLayout({
             </main>
 
             <Toaster />
+            <AIAssistant />
           </AuthProvider>
         </ThemeProvider>
       </body>

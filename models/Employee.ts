@@ -73,6 +73,7 @@ const EmployeeSchema = new Schema<IEmployee>(
 /* search-friendly indexes */
 EmployeeSchema.index({ name: 1 });
 EmployeeSchema.index({ department: 1 });
+EmployeeSchema.index({ status: 1 });
 
 const Employee: Model<IEmployee> =
   mongoose.models.Employee ??

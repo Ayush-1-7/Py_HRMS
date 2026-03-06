@@ -17,7 +17,9 @@ import {
   IoStatsChartOutline,
   IoLocationOutline,
   IoWalletOutline,
+  IoSparklesOutline,
 } from "react-icons/io5";
+import EmployeeAITab from "@/components/ai/EmployeeAITab";
 import { fetchEmployeeById, deleteEmployee } from "@/services/employeeService";
 import { fetchAttendance, type AttendanceListResponse } from "@/services/attendanceService";
 import { DEPARTMENT_COLORS, type Department } from "@/lib/departments";
@@ -36,7 +38,7 @@ export default function EmployeeProfilePage() {
   const [error, setError] = useState<string | null>(null);
 
   /* tabs */
-  const [activeTab, setActiveTab] = useState<"overview" | "attendance" | "activity">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "attendance" | "activity" | "ai_insights">("overview");
 
   /* modals */
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -302,12 +304,13 @@ export default function EmployeeProfilePage() {
             {[
               { id: "overview", label: "Executive Info", icon: IoPersonOutline },
               { id: "attendance", label: "Attendance Log", icon: IoTimeOutline },
+              { id: "ai_insights", label: "AI Insights", icon: IoSparklesOutline },
               { id: "activity", label: "Operation History", icon: IoStatsChartOutline },
             ].map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center gap-3 py-5 text-[11px] font-black uppercase tracking-[0.2em] border-b-4 transition-all whitespace-nowrap italic ${activeTab === tab.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'}`}
+                className={`flex items-center gap-3 py-5 text-[11px] font-black uppercase tracking-[0.2em] border-b-4 transition-all whitespace-nowrap italic ${activeTab === tab.id ? (tab.id === 'ai_insights' ? 'border-violet-500 text-violet-600 dark:text-violet-400' : 'border-brand-primary text-brand-primary') : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'}`}
               >
                 <tab.icon size={20} />
                 {tab.label}
@@ -429,6 +432,10 @@ export default function EmployeeProfilePage() {
                   ))}
                 </div>
               </div>
+            )}
+
+            {activeTab === "ai_insights" && (
+              <EmployeeAITab employeeId={String(employee._id)} />
             )}
           </div>
         </div>
